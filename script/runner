@@ -3,6 +3,12 @@
 set -e
 
 cd workspace
-git clone trotup/trotup
-cd trotup
+if [ -d "trotup" ]; then
+  cd trotup
+  git fetch origin
+else
+  git clone https://github.com/trotup/trotup
+  cd trotup
+fi
+
 script/cibuild
