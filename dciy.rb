@@ -31,8 +31,14 @@ end
 module DCIY::Controllers
   class Index
     def get
-      @projects = Project.find(:all)
+      @projects = Project.all
       render :index
+    end
+  end
+
+  class Build
+    def get
+      render :build
     end
   end
 

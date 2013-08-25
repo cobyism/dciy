@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+cd workspace
+git clone trotup/trotup
+cd trotup
+script/cibuild
