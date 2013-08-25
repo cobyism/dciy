@@ -31,13 +31,13 @@ end
 module DCIY::Controllers
   class Index
     def get
+      @projects = Project.find(:all)
       render :index
     end
   end
 
   class Projects
     def get
-      @projects = Project.find(:all)
       render :projects
     end
   end
@@ -67,7 +67,7 @@ module DCIY::Controllers
     def get(owner, repo)
       @project = Project.find_by_owner_and_repo(owner, repo)
       @project.destroy!
-      redirect Projects
+      redirect Index
     end
   end
 
