@@ -1,5 +1,9 @@
 Camping.goes :DCIY
 
+module DCIY
+  set :views, File.dirname(__FILE__) + '/views'
+end
+
 module DCIY::Models
   class Project < Base; end
   class Build < Base; end
@@ -10,11 +14,5 @@ module DCIY::Controllers
     def get
       render :index
     end
-  end
-end
-
-module DCIY::Views
-  def index
-    h1 "Boom!"
   end
 end
