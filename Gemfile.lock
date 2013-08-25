@@ -26,6 +26,7 @@ GEM
       activerecord
       camping (>= 2.1)
       sqlite3 (>= 1.1.0.1)
+    dotenv (0.8.0)
     i18n (0.6.4)
     mab (0.0.3)
     minitest (4.7.5)
@@ -42,4 +43,5 @@ PLATFORMS
 
 DEPENDENCIES
   camping-omnibus
+  dotenv
   tilt

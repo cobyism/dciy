@@ -1,0 +1,15 @@
+<h1>Projects</h1>
+
+<% if @projects.count > 0 %>
+  <ul>
+    <% @projects.each do |project| %>
+      <li>
+        <a href="<%= R(ProjectXX, project.owner, project.repo) %>">
+          <%= project.owner %>/<%= project.repo %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No projects yet!</p>
+<% end %>
