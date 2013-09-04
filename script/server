@@ -1,3 +1,4 @@
 #!/bin/bash
 
-bundle exec camping dciy.rb
+script/bootstrap
+bundle exec rails server --port 6161

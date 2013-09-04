@@ -35,6 +35,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    dotenv (0.8.0)
+    dotenv-rails (0.8.0)
+      dotenv (= 0.8.0)
     erubis (2.7.0)
     execjs (2.0.1)
     hike (1.2.3)
@@ -45,7 +48,6 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -70,16 +72,11 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.1.0)
-    rdoc (3.12.2)
-      json (~> 1.4)
     sass (3.2.10)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    sdoc (0.3.20)
-      json (>= 1.1.3)
-      rdoc (~> 3.10)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -109,11 +106,11 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dotenv-rails
   jbuilder (~> 1.2)
   jquery-rails
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)
-  sdoc
   sqlite3
   turbolinks
   uglifier (>= 1.3.0)
