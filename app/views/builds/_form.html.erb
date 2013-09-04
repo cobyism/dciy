@@ -1,0 +1,21 @@
+<%= form_for(@build) do |f| %>
+  <% if @build.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@build.errors.count, "error") %> prohibited this build from being saved:</h2>
+
+      <ul>
+      <% @build.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :project_id %><br>
+    <%= f.collection_select :project_id, Project.all, :id, :repo, :prompt => true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
