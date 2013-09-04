@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @build.project_id %>
+</p>
+
+<p>
+  <strong>Started at:</strong>
+  <%= @build.started_at %>
+</p>
+
+<p>
+  <strong>Completed at:</strong>
+  <%= @build.completed_at %>
+</p>
+
+<p>
+  <strong>Successful:</strong>
+  <%= @build.successful %>
+</p>
+
+<p>
+  <strong>Output:</strong>
+  <%= @build.output %>
+</p>
+
+<%= link_to 'Edit', edit_build_path(@build) %> |
+<%= link_to 'Back', builds_path %>
