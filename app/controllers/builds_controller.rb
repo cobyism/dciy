@@ -26,18 +26,9 @@ class BuildsController < ApplicationController
   def create
     @build = Build.new(build_params)
 
-    @build.started_at = Time.now
-    count_to = 200
-    @build.output = "Counting to #{count_to}\n"
-    (0..count_to).each do |i|
-      @build.output << "=> #{i}\n"
-    end
-    @build.output << "\nFinished!"
-    @build.successful = true
-    @build.completed_at = Time.now
-
     respond_to do |format|
       if @build.save
+        BuildWorker.perform_async(@build.id)
         format.html { redirect_to @build, notice: 'Build was successfully created.' }
         format.json { render action: 'show', status: :created, location: @build }
       else
