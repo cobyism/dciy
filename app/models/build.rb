@@ -40,20 +40,37 @@ class Build < ActiveRecord::Base
   end
 
   def status_phrase
-    unless started_at.nil?
-      unless completed_at.nil?
-        d = duration
-        if d.blank?
-          "#{status_word} instantly"
-        else
-          "#{status_word} in #{duration}"
-        end
+    case status
+    when :succeeded, :failed
+      d = duration
+      if d.blank?
+        "#{status_word} instantly"
       else
-        "Build started #{distance_of_time_in_words_to_now(started_at, true)} ago"
+        "#{status_word} in #{duration}"
       end
-    else
+    when :pending
+      "Build started #{distance_of_time_in_words_to_now(started_at, true)} ago"
+    when :mia
+      "Missing, presumed dead"
+    when :queued
       "#{status_word} #{distance_of_time_in_words_to_now(created_at, true)} ago"
     end
+
+
+    # unless started_at.nil?
+    #   unless completed_at.nil?
+    #     d = duration
+    #     if d.blank?
+    #       "#{status_word} instantly"
+    #     else
+    #       "#{status_word} in #{duration}"
+    #     end
+    #   else
+    #     "Build started #{distance_of_time_in_words_to_now(started_at, true)} ago"
+    #   end
+    # else
+    #   "#{status_word} #{distance_of_time_in_words_to_now(created_at, true)} ago"
+    # end
   end
 
   def status_word
@@ -65,11 +82,15 @@ class Build < ActiveRecord::Base
       unless completed_at.nil?
         successful ? :succeeded : :failed
       else
-        :pending
+        ages_ago(started_at) ? :mia : :pending
       end
     else
-      :queued
+      ages_ago(created_at) ? :mia : :queued
     end
+  end
+
+  def ages_ago(time)
+    (Time.now - time) > 1.hour
   end
 
 end
