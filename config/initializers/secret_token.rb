@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Dciy::Application.config.secret_key_base = 'e983310bab888b7ac8a103d555e3d465e580e12ed14ad03f15a54ce869172c3ef0d4e578fdd537de171988df58c4dbaaa5bbc74139984876c77e0b9471e75d4d'
+DCIY::Application.config.secret_key_base = 'e983310bab888b7ac8a103d555e3d465e580e12ed14ad03f15a54ce869172c3ef0d4e578fdd537de171988df58c4dbaaa5bbc74139984876c77e0b9471e75d4d'
