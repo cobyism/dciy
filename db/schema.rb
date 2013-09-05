@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130904134816) do
+ActiveRecord::Schema.define(version: 20130905114753) do
 
   create_table "builds", force: true do |t|
     t.integer  "project_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20130904134816) do
     t.text     "output"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sha"
   end
 
   create_table "projects", force: true do |t|

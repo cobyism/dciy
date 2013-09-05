@@ -25,8 +25,8 @@ class Checkout
 
     in_dir do |c|
       c.run! "git fetch origin"
-      c.run! "git checkout origin/master"
-      c.run! "git reset --hard master"
+      # c.run! "git checkout #{sha}"
+      c.run! "git reset --hard #{sha}"
       # run init separately for compatibility with old versions of git
       c.run! "git submodule init"
       c.run! "git submodule update"
@@ -79,17 +79,21 @@ class Checkout
     dump
   end
 
-  def sha1
-    @sha1 ||= @commit == "HEAD" ? head : @commit
+  def sha
+    @commit.match(/\b[0-9a-f]{5,40}\b/) ? find_head(@commit) : @commit
   end
 
-  def head
-    runner.run!("git ls-remote --heads #{@project.repo_uri} master")
-      output.split.first
+  def find_head(ref)
+    result = runner.run!("git ls-remote --heads #{@project.repo_uri} #{ref}")
+    unless result.output.nil?
+      result.output.split.first
+    else
+      "master"
+    end
   end
 
   def run_in_dir(command)
-    command = "export DCIY_BRANCH=\"master\"; " + command
+    # command = "export DCIY_BRANCH=\"master\"; " + command
     if block_given?
       in_dir do |r|
         r.run(command) do |chunk|

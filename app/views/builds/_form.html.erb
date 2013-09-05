@@ -15,6 +15,12 @@
     <%= f.label :project_id %><br>
     <%= f.collection_select :project_id, Project.all, :id, :repo, :prompt => true %>
   </div>
+
+  <div class="field">
+    <%= f.label :sha, "Branch or SHA to build" %><br>
+    <%= f.text_field :sha %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

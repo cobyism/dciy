@@ -17,7 +17,7 @@
   <tbody>
     <% @builds.each do |build| %>
       <tr class="build build-status-<%= build.status %>">
-        <td><%= build.project.repo %></td>
+        <td><%= build.project.repo %>@<%= build.sha.truncate(8) if build.sha %></td>
         <td><%= build.status_phrase %></td>
         <td><%= build.status %></td>
         <td><%= link_to 'Show', build %></td>
