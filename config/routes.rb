@@ -1,4 +1,4 @@
-Dciy::Application.routes.draw do
+DCIY::Application.routes.draw do
   resources :builds
 
   resources :projects
