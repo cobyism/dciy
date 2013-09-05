@@ -4,7 +4,7 @@ class BuildsController < ApplicationController
   # GET /builds
   # GET /builds.json
   def index
-    @builds = Build.all
+    @builds = Build.all(:order => "created_at DESC")
   end
 
   # GET /builds/1
