@@ -103,6 +103,6 @@ class Builder
   end
 
   def commit
-    "master"
+    @build.sha
   end
 end

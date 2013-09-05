@@ -14,7 +14,7 @@ class BuildsController < ApplicationController
 
   # GET /builds/new
   def new
-    @build = Build.new
+    @build = Build.new(:sha => "master")
   end
 
   # GET /builds/1/edit
@@ -70,6 +70,6 @@ class BuildsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def build_params
-      params.require(:build).permit(:project_id, :started_at, :completed_at, :successful, :output)
+      params.require(:build).permit(:project_id, :started_at, :completed_at, :successful, :output, :sha)
     end
 end

@@ -5,7 +5,12 @@
 
 <p>
   <strong>Project:</strong>
-  <%= @build.project_id %>
+  <%= @build.project.repo %>
+</p>
+
+<p>
+  <strong>Branch or SHA:</strong>
+  <%= @build.sha %>
 </p>
 
 <p>

@@ -3,14 +3,10 @@ class Build < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
 
   belongs_to :project
-  validates_presence_of :project_id
+  validates_presence_of :project_id, :sha
 
   def command
     "script/cibuild"
-  end
-
-  def run
-    Builder.build(self, Integrity.config.directory, Logger.new(STDOUT))
   end
 
   def duration
