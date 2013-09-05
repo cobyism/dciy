@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Edit', edit_build_path(@build) %> |
+<%= link_to 'Back', builds_path %>
+
 <p>
   <strong>Project:</strong>
   <%= @build.project_id %>
@@ -16,14 +19,20 @@
 </p>
 
 <p>
+  <strong>Status:</strong>
+  <%= @build.status_phrase %>
+</p>
+
+<p>
   <strong>Successful:</strong>
   <%= @build.successful %>
 </p>
 
 <p>
   <strong>Output:</strong>
-  <%= @build.output %>
-</p>
 
-<%= link_to 'Edit', edit_build_path(@build) %> |
-<%= link_to 'Back', builds_path %>
+<pre class="build-output">
+<%= @build.output %>
+</pre>
+
+</p>
