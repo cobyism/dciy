@@ -21,3 +21,27 @@
 .build-status-mia {
   color: #aaa;
 }
+
+.build-output {
+  overflow-y: scroll;
+  height: 400px;
+  width: 800px;
+  border-radius: 3px;
+  background-color: #444;
+  color: #eee;
+}
+
+.build-output::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 12px;
+  background: #888;
+  box-shadow: inset 0 1px 5px rgba(0,0,0,.5);
+  border-radius: 0 3px 3px 0;
+}
+.build-output::-webkit-scrollbar-thumb {
+  border: 1px solid #777;
+  border-radius: 0 3px 3px 0;
+  background-color: rgba(255,255,255,.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(0,0,0,.1);
+  background: -webkit-linear-gradient(#eee, #ddd);
+}
