@@ -1,18 +1,19 @@
 # Shamelessly stolen from
 # https://github.com/integrity/integrity
 
-class Builder
-  def self.build(_build, directory, logger)
-    new(_build, directory, logger).build
+class Runner
+
+  def self.go_nuts_on(build)
+    new(build).run_run_run
   end
 
-  def initialize(build, directory, logger)
+  def initialize(build)
     @build     = build
-    @directory = directory
-    @logger    = logger
+    @directory = build.project.workspace_path
+    @logger    = Logger.new(STDOUT)
   end
 
-  def build
+  def run_run_run
     begin
       start
       run do |chunk|
