@@ -5,8 +5,11 @@ class BuildWorker
   def perform(build_id)
     build = Build.find_by_id(build_id)
     project = build.project
+
+    # This needs to not be nil otherwise apparently shit can get weird.
     build.output = ""
     build.save
-    Builder.build(build, project.workspace_path, Logger.new(STDOUT))
+
+    Runner.go_nuts_on(build)
   end
 end
