@@ -30,17 +30,21 @@ class Builder
 
   def start
     @logger.info "Started building #{project.repo} at #{commit}"
-    # @build.raise_on_save_failure = true
     @build.update(:started_at => Time.now)
-    # @build.project.enabled_notifiers.each { |n| n.notify_of_build_start(@build) }
-    checkout.run
-    # checkout.metadata invokes git and may fail
-    # @build.commit.raise_on_save_failure = true
-    # @build.commit.update(checkout.metadata)
+
+    unless File.exists?(@directory)
+      in_terminal.run "git clone #{project.repo_uri} #{@directory}"
+    end
+
+    in_terminal.run "git fetch origin", @directory
+    in_terminal.run "git reset --hard #{sha}", @directory
+    # run init separately for compatibility with old versions of git
+    in_terminal.run "git submodule init", @directory
+    in_terminal.run "git submodule update", @directory
   end
 
   def run
-    @result = checkout.run_in_dir(command) do |chunk|
+    @result = in_terminal.run(@build.ci_command, @build.project.workspace_path) do |chunk|
       yield chunk
     end
   end
@@ -50,13 +54,10 @@ class Builder
     output << chunk
     @build.output = output
     @build.save
-    # @build.update(:output => @build.output + chunk)
   end
 
   def complete
     @logger.info "Build #{commit} exited with #{@result.success} got:\n #{@result.output}"
-
-    # @build.raise_on_save_failure = true
     @build.update(
       :completed_at => Time.now,
       :successful   => @result.success,
@@ -82,27 +83,32 @@ class Builder
     )
   end
 
-  # def notify
-  #   @build.notify
-  # end
-
-  def checkout
-    @checkout ||= Checkout.new(project, commit, directory, @logger)
-  end
-
   def directory
-    @_directory ||= @directory #.join(@build.id.to_s)
+    @_directory ||= @directory
   end
 
   def project
     @build.project
   end
 
-  def command
-    @build.command
+  def commit
+    @commit ||= @build.sha
   end
 
-  def commit
-    @build.sha
+  def in_terminal
+    @commander ||= Command.new
+  end
+
+  def sha
+    commit.match(/\b[0-9a-f]{5,40}\b/) ? find_head(commit) : commit
+  end
+
+  def find_head(ref)
+    result = in_terminal.run("git ls-remote --heads #{project.repo_uri} #{ref}")
+    unless result.output.nil?
+      result.output.split.first
+    else
+      "master"
+    end
   end
 end
