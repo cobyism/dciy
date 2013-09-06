@@ -6,8 +6,8 @@ class CommandRunner
 
   Result = Struct.new(:success, :output)
 
-  def initialize(logger, build_output_interval=nil)
-    @logger = logger
+  def initialize(build_output_interval=nil)
+    @logger = Logger.new(STDOUT)
     @build_output_interval = build_output_interval || 5
   end
 

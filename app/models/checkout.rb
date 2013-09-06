@@ -2,11 +2,11 @@
 # https://github.com/integrity/integrity
 
 class Checkout
-  def initialize(project, commit, directory, logger)
+  def initialize(project, commit, directory)
     @project   = project
     @commit    = commit
     @directory = directory
-    @logger    = logger
+    @runner    = CommandRunner.new
   end
 
   def run
@@ -20,7 +20,7 @@ class Checkout
   def default_checkout
 
     unless File.exists?(@directory)
-      runner.run! "git clone #{@project.repo_uri} #{@directory}"
+      @runner.run! "git clone #{@project.repo_uri} #{@directory}"
     end
 
     in_dir do |c|
@@ -84,7 +84,7 @@ class Checkout
   end
 
   def find_head(ref)
-    result = runner.run!("git ls-remote --heads #{@project.repo_uri} #{ref}")
+    result = @runner.run!("git ls-remote --heads #{@project.repo_uri} #{ref}")
     unless result.output.nil?
       result.output.split.first
     else
@@ -122,10 +122,6 @@ class Checkout
   end
 
   def in_dir(&block)
-    runner.cd(@directory, &block)
-  end
-
-  def runner
-    @runner ||= CommandRunner.new(Logger.new(STDOUT))
+    @runner.cd(@directory, &block)
   end
 end

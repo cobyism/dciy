@@ -9,4 +9,5 @@ class BuildWorker
     build.save
     Builder.build(build, project.workspace_path, Logger.new(STDOUT))
   end
+
 end

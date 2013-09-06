@@ -2,14 +2,13 @@
 # https://github.com/integrity/integrity
 
 class Builder
-  def self.build(_build, directory, logger)
-    new(_build, directory, logger).build
+  def self.build(_build, directory)
+    new(_build, directory).build
   end
 
-  def initialize(build, directory, logger)
+  def initialize(build, directory)
     @build     = build
     @directory = directory
-    @logger    = logger
   end
 
   def build
@@ -29,7 +28,7 @@ class Builder
   end
 
   def start
-    @logger.info "Started building #{project.repo} at #{commit}"
+    # @logger.info "Started building #{project.repo} at #{commit}"
     # @build.raise_on_save_failure = true
     @build.update(:started_at => Time.now)
     # @build.project.enabled_notifiers.each { |n| n.notify_of_build_start(@build) }
@@ -87,7 +86,7 @@ class Builder
   # end
 
   def checkout
-    @checkout ||= Checkout.new(project, commit, directory, @logger)
+    @checkout ||= Checkout.new(project, commit, directory)
   end
 
   def directory
