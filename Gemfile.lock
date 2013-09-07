@@ -43,6 +43,9 @@ GEM
       dotenv (= 0.8.0)
     erubis (2.7.0)
     execjs (2.0.1)
+    foreman (0.63.0)
+      dotenv (>= 0.7)
+      thor (>= 0.13.6)
     hike (1.2.3)
     i18n (0.6.5)
     jbuilder (1.5.1)
@@ -127,6 +130,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   dotenv-rails
+  foreman
   jbuilder (~> 1.2)
   jquery-rails
   rails (= 4.0.0)

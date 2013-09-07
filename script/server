@@ -1,4 +1,4 @@
 #!/bin/bash
 
 script/bootstrap
-bundle exec rails server --port 6161
+bundle exec foreman start
