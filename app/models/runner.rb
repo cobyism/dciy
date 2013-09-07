@@ -9,16 +9,15 @@ class Runner
 
   def initialize(build)
     @build     = build
-    @directory = build.project.workspace_path
+    @project   = build.project
+    @directory = @project.workspace_path
     @logger    = Logger.new(STDOUT)
   end
 
   def run_run_run
     begin
-      start
-      run do |chunk|
-        add_output(chunk)
-      end
+      do_checkout
+      run_ci
     rescue Interrupt, SystemExit
       raise
     rescue Exception => e
@@ -26,27 +25,29 @@ class Runner
     else
       complete
     end
-    # notify
   end
 
-  def start
-    @logger.info "Started building #{project.repo} at #{commit}"
+  def do_checkout
+    @logger.info "Started building #{@project.repo} at #{@build.sha}"
     @build.update(:started_at => Time.now)
 
     unless File.exists?(@directory)
-      in_terminal.run "git clone #{project.repo_uri} #{@directory}"
+      in_terminal.run "git clone #{@project.repo_uri} #{@directory}"
     end
 
     in_terminal.run "git fetch origin", @directory
-    in_terminal.run "git reset --hard #{sha}", @directory
+    in_terminal.run "git reset --hard #{sha_for_branch}", @directory
     # run init separately for compatibility with old versions of git
     in_terminal.run "git submodule init", @directory
     in_terminal.run "git submodule update", @directory
+    r = in_terminal.run "git show HEAD --pretty=oneline --summary", @directory
+    @logger.info "Checked out #{@project.repo} at #{@build.sha}"
+    @logger.info "Current head: #{r.output}"
   end
 
-  def run
+  def run_ci
     @result = in_terminal.run(@build.ci_command, @build.project.workspace_path) do |chunk|
-      yield chunk
+      add_output(chunk)
     end
   end
 
@@ -58,7 +59,7 @@ class Runner
   end
 
   def complete
-    @logger.info "Build #{commit} exited with #{@result.success} got:\n #{@result.output}"
+    @logger.info "Build #{@build.sha} exited with #{@result.success} got:\n #{@result.output}"
     @build.update(
       :completed_at => Time.now,
       :successful   => @result.success,
@@ -69,7 +70,7 @@ class Runner
   def fail(exception)
     failure_message = "#{exception.class}: #{exception.message}"
 
-    @logger.info "Build #{commit} failed with an exception: #{failure_message}"
+    @logger.info "Build #{@build.sha} failed with an exception: #{failure_message}"
 
     failure_message << "\n\n"
     exception.backtrace.each do |line|
@@ -84,28 +85,16 @@ class Runner
     )
   end
 
-  def directory
-    @_directory ||= @directory
-  end
-
-  def project
-    @build.project
-  end
-
-  def commit
-    @commit ||= @build.sha
-  end
-
   def in_terminal
     @commander ||= Command.new
   end
 
-  def sha
-    commit.match(/\b[0-9a-f]{5,40}\b/) ? find_head(commit) : commit
+  def sha_for_branch
+    @build.sha.match(/\b[0-9a-f]{5,40}\b/) ? @build.sha : find_head(@build.sha)
   end
 
   def find_head(ref)
-    result = in_terminal.run("git ls-remote --heads #{project.repo_uri} #{ref}")
+    result = in_terminal.run("git ls-remote --heads #{@project.repo_uri} #{ref}")
     unless result.output.nil?
       result.output.split.first
     else
