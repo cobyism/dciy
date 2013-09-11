@@ -1,29 +1,24 @@
-<h1>Listing builds</h1>
+<div class="page-header">
+  <div class="page-actions">
+    <%= link_to 'New Build', new_build_path %>
+  </div>
+  <% if @project %>
+    <h1 class="page-title">Builds for <%= @project.repo %></h1>
+  <% else %>
+    <h1 class="page-title">All Builds</h1>
+  <% end %>
+</div>
 
-<%= link_to 'New Build', new_build_path %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Project</th>
-      <th>Duration</th>
-      <th>Status</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @builds.each do |build| %>
-      <tr class="build build-status-<%= build.status %>">
-        <td><%= build.project.repo %>@<%= build.sha.truncate(8) if build.sha %></td>
-        <td><%= build.status_phrase %></td>
-        <td><%= build.status %></td>
-        <td><%= link_to 'Show', build %></td>
-        <td><%= link_to 'Edit', edit_build_path(build) %></td>
-        <td><%= link_to 'Destroy', build, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="build-list">
+  <% @builds.each do |build| %>
+    <div class="build build-status-<%= build.status %>">
+      <div class="build-actions">
+        <%= link_to 'View Details', build %>
+      </div>
+      <div class="build-info">
+        <div class="build-commit"><%= build.project.repo %>@<%= build.sha.truncate(8) if build.sha %></div>
+        <div class="build-status"><%= build.status_phrase %></div>
+      </div>
+    </div>
+  <% end %>
+</div>

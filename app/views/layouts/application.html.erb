@@ -9,7 +9,26 @@
 </head>
 <body>
 
-<%= yield %>
+  <div class="app">
+    <div class="primary-pane">
+      <%= yield %>
+    </div>
+    <div class="secondary-pane">
+      <h1 class="app-name">
+        <abbr title="Do Continuous Integration Yourself">DCIY</abbr>
+      </h1>
+      <ul class="project-filter">
+        <li class="project all-builds">
+          <%= link_to "All Builds", root_path %>
+        </li>
+        <% Project.find(:all).each do |project| %>
+          <li class="project">
+            <%= link_to project.repo, project_builds_path(project) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
 </body>
 </html>

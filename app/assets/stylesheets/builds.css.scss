@@ -20,6 +20,22 @@
   color: lighten($dciy-grey, 10%);
 }
 
+.build {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(#000, .05);
+  clear: both;
+  padding: 10px;
+  @include gradient(#fff, #fafafa);
+  & + & {
+    margin-top: 10px;
+  }
+}
+
+.build-actions {
+  float: right;
+}
+
 .build-output {
   overflow-y: scroll;
   height: 400px;
