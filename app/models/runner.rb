@@ -15,6 +15,7 @@ class Runner
   end
 
   def run_run_run
+    do_ascii_header
     begin
       do_checkout
       run_ci
@@ -27,25 +28,44 @@ class Runner
     end
   end
 
+  def do_ascii_header
+    ascii = <<-EOF
+    _/_/_/      _/_/_/  _/_/_/  _/      _/
+   _/    _/  _/          _/      _/  _/
+  _/    _/  _/          _/        _/
+ _/    _/  _/          _/        _/
+_/_/_/      _/_/_/  _/_/_/      _/
+
+Built with <3 by DCIY
+https://github.com/cobyism/dciy
+
+EOF
+    add_output(ascii)
+  end
+
   def do_checkout
+    add_dciy_build_output "Aight, let's do this!"
+
     @logger.info "Started building #{@project.repo} at #{@build.sha}"
     @build.update(:started_at => Time.now)
 
     unless File.exists?(@directory)
+      add_dciy_build_output "Cloning repository..."
       in_terminal.run "git clone #{@project.repo_uri} #{@directory}"
     end
 
+    add_dciy_build_output "Checking out project at #{sha_for_branch}..."
     in_terminal.run "git fetch origin", @directory
-    in_terminal.run "git reset --hard #{sha_for_branch}", @directory
+
+    add_dciy_build_output in_terminal.run("git reset --hard #{sha_for_branch}", @directory).output
     # run init separately for compatibility with old versions of git
+    add_dciy_build_output "Setting up submodules, if you're into that kind of thing..."
     in_terminal.run "git submodule init", @directory
     in_terminal.run "git submodule update", @directory
-    r = in_terminal.run "git show HEAD --pretty=oneline --summary", @directory
-    @logger.info "Checked out #{@project.repo} at #{@build.sha}"
-    @logger.info "Current head: #{r.output}"
   end
 
   def run_ci
+    add_dciy_build_output "Running CI...\n"
     @result = in_terminal.run(@build.ci_command, @build.project.workspace_path) do |chunk|
       add_output(chunk)
     end
@@ -58,12 +78,16 @@ class Runner
     @build.save
   end
 
+  def add_dciy_build_output(message)
+    add_output "[DCIY] #{message}\n"
+  end
+
   def complete
     @logger.info "Build #{@build.sha} exited with #{@result.success} got:\n #{@result.output}"
     @build.update(
       :completed_at => Time.now,
       :successful   => @result.success,
-      :output       => @result.output
+      :output       => @build.output + @result.output
     )
   end
 
@@ -80,8 +104,8 @@ class Runner
     # @build.raise_on_save_failure = true
     @build.update(
       :completed_at => Time.now,
-      :successful => false,
-      :output => failure_message
+      :successful   => false,
+      :output       => @build.output + failure_message
     )
   end
 
