@@ -1,25 +1,23 @@
-// Place all the styles related to the builds controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variables";
 
 .build-status-queued {
-  color: #888;
+  color: $dciy-grey;
 }
 
 .build-status-pending {
-  color: #f90;
+  color: $dciy-orange;
 }
 
 .build-status-succeeded {
-  color: #090;
+  color: $dciy-green;
 }
 
 .build-status-failed {
-  color: #911;
+  color: $dciy-red;
 }
 
 .build-status-mia {
-  color: #aaa;
+  color: lighten($dciy-grey, 10%);
 }
 
 .build-output {
