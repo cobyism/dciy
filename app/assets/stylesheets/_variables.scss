@@ -1,0 +1,16 @@
+// Colours
+$dciy-green: #090;
+$dciy-blue: #3782cd;
+$dciy-red: #911;
+$dciy-orange: #f90;
+$dciy-grey: #888;
+
+@mixin gradient($start: #f3f3f3, $end: #eee){
+  background-color: $end;
+  // FF 3.6+
+  background-image: -moz-linear-gradient($start, $end);
+  // Safari 5.1+, Chrome 10+
+  background-image: -webkit-linear-gradient($start, $end);
+  background-image: linear-gradient($start, $end);
+  background-repeat: repeat-x;
+}
