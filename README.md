@@ -9,9 +9,9 @@ DCIY does exactly this. There is no system for multiple users, or for managing S
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
 
-## Hacking on DCIY
+## Getting DCIY running
 
-Run these commands to get set up for hacking on this locally:
+Run these commands from your terminal to get set up for hacking on this locally:
 
 ```sh
 git clone https://github.com/cobyism/dciy
@@ -23,14 +23,35 @@ The [`script/server`](./script/server) command should do all the bootstrapping a
 process starting necessary, and should give you a DCIY server running locally on
 at the following address: [`http://localhost:6161`](http://localhost:6161).
 
-## Adding a project
+## Contributing to DCIY
+
+I’d :heart: to receive contributions and feedback from anyone,
+and there’s more ways to do that than writing code.
+
+### Contributing code
+
+1. Fork the repository.
+2. Create a branch (e.g. `my-awesome-feature`) for the work you’re going to do.
+3. Make your awesome changes in your topic branch.
+4. Send a pull request from your branch to this repository.
+
+### Other ways to contribute
+
+- Try the project out yourself.
+- [File issues](https://github.com/cobyism/dciy/issues/new) about bugs, problems, or inconsistencies you run into.
+- [File issues](https://github.com/cobyism/dciy/issues/new) with suggestions, feature ideas, or UI mockups for improvements.
+- Read through the documentation (just this `README` for now), and look for ways it could be improved. Click "Edit" on the file and make the changes yourself if you can!
+
+## Using DCIY
+
+### Adding a project
 
 Go to [the root URL](http://localhost:6161/) or [`/projects`](http://localhost:6161/projects)
 and click "New Project", and type in the `<owner>/<repo>` part of your GitHub project
 (leave off the `https://github.com` and the `.git` parts). Submitting the form will
 give you a new project which you can run builds for.
 
-## Triggering a Build
+### Triggering a Build
 
 Go to [`/builds`](http://localhost:6161/builds) and click "New Build". Enter the
 branch name or commit SHA that you want to build the project at, and submit the form.
