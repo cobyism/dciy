@@ -4,7 +4,12 @@ class BuildsController < ApplicationController
   # GET /builds
   # GET /builds.json
   def index
-    @builds = Build.all(:order => "created_at DESC")
+    if params[:project_id].present?
+      @project = Project.find(params[:project_id])
+      @builds = @project.builds
+    else
+      @builds = Build.all(:order => "created_at DESC")
+    end
   end
 
   # GET /builds/1
