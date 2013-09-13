@@ -32,8 +32,13 @@
     h1 {
       display: inline-block;
       font-size: 21px;
+      font-weight: 300;
       line-height: 32px;
+      padding-right: 5px;
       vertical-align: middle;
+      span {
+        font-weight: bold;
+      }
     }
   }
   .page-actions {
