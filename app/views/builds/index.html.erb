@@ -1,12 +1,15 @@
 <div class="page-header">
   <div class="page-actions">
-    <%= link_to 'New Build', new_build_path %>
+    <%= link_to 'New Build', new_build_path, :class => "button" %>
   </div>
-  <% if @project %>
-    <h1 class="page-title">Builds for <%= @project.repo %></h1>
-  <% else %>
-    <h1 class="page-title">All Builds</h1>
-  <% end %>
+  <div class="page-title">
+    <% if @project %>
+      <h1>Builds for <%= @project.repo %></h1>
+      <%= link_to "Configure Project", edit_project_path(@project), :class => "button small" %>
+    <% else %>
+      <h1>All Builds</h1>
+    <% end %>
+  </div>
 </div>
 
 <div class="build-list">
