@@ -1,6 +1,4 @@
-// Place all the styles related to the projects controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "variables";
 
 .project-filter {
   .project {
@@ -12,14 +10,21 @@
       border-radius: 0 5px 5px 0;
       box-shadow: 1px 1px 3px rgba(#000, .05);
       display: block;
-      margin-left: -20px;
+      margin-left: -10px;
       padding: 10px;
-      padding-left: 20px;
+      padding-left: 10px;
+      &:hover {
+        background: #fff;
+      }
       &.selected {
         background: #fff;
-        margin-left: -21px;
-        padding-left: 21px;
+        margin-left: -11px;
+        padding-left: 11px;
       }
     }
   }
+}
+
+.new-project {
+  padding: 10px 0;
 }

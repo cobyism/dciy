@@ -21,13 +21,21 @@
 }
 
 .secondary-pane {
+  padding-left: 10px;
   width: 200px;
 }
 
 .page-header {
-  border-bottom: 1px solid #eee;
   margin-bottom: 10px;
-  padding-bottom: 10px;
+  overflow: hidden;
+  .page-title {
+    h1 {
+      display: inline-block;
+      font-size: 21px;
+      line-height: 32px;
+      vertical-align: middle;
+    }
+  }
   .page-actions {
     float: right;
   }
