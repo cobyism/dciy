@@ -4,10 +4,11 @@
   </div>
   <div class="page-title">
     <% if @project %>
-      <h1>Builds for <%= @project.repo %></h1>
+      <h1>Builds for <span><%= @project.repo %></span></h1>
       <%= link_to "Configure Project", edit_project_path(@project), :class => "button small" %>
+      <%= link_to "View on GitHub", @project.repo_uri, :class => "button small", :target => "_blank" %>
     <% else %>
-      <h1>All Builds</h1>
+      <h1><span>All Builds</span></h1>
     <% end %>
   </div>
 </div>
