@@ -1,3 +1,25 @@
 // Place all the styles related to the projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.project-filter {
+  .project {
+    margin-top: 10px;
+    a {
+      background: #f8f8f8;
+      border: 1px solid #e2e2e2;
+      border-left: none;
+      border-radius: 0 5px 5px 0;
+      box-shadow: 1px 1px 3px rgba(#000, .05);
+      display: block;
+      margin-left: -20px;
+      padding: 10px;
+      padding-left: 20px;
+      &.selected {
+        background: #fff;
+        margin-left: -21px;
+        padding-left: 21px;
+      }
+    }
+  }
+}
