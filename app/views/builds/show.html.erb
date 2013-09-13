@@ -1,26 +1,12 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_build_path(@build) %> |
-<%= link_to 'Back', builds_path %>
-
-<p>
-  <strong>Project:</strong>
-  <%= @build.project.repo %>
-</p>
+<div class="page-header">
+  <div class="page-title">
+    <h1><span><%= @build.project.repo %></span> @ <%= @build.sha %></h1>
+  </div>
+</div>
 
 <p>
   <strong>Branch or SHA:</strong>
   <%= @build.sha %>
-</p>
-
-<p>
-  <strong>Started at:</strong>
-  <%= @build.started_at %>
-</p>
-
-<p>
-  <strong>Completed at:</strong>
-  <%= @build.completed_at %>
 </p>
 
 <p>
@@ -33,11 +19,6 @@
   <%= @build.successful %>
 </p>
 
-<p>
-  <strong>Output:</strong>
-
 <pre class="build-output">
 <%= @build.output %>
 </pre>
-
-</p>
