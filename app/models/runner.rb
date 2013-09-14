@@ -19,6 +19,8 @@ class Runner
     begin
       do_checkout
       run_ci
+    rescue CantFindBuildFile
+      no_build_file
     rescue Interrupt, SystemExit
       raise
     rescue Exception => e
@@ -66,7 +68,8 @@ EOF
 
   def run_ci
     add_dciy_build_output "Running CI...\n"
-    @result = in_terminal.run(@build.ci_command, @build.project.workspace_path) do |chunk|
+    project = @build.project
+    @result = in_terminal.run(project.ci_command, project.workspace_path) do |chunk|
       add_output(chunk)
     end
   end
@@ -102,6 +105,27 @@ EOF
     end
 
     # @build.raise_on_save_failure = true
+    @build.update(
+      :completed_at => Time.now,
+      :successful   => false,
+      :output       => @build.output + failure_message
+    )
+  end
+
+  def no_build_file
+    @logger.info "Build #{@build.sha} could not run because no build information was found."
+
+    failure_message = <<-EOF
+I don't know how to build this project!
+
+Please create a "dciy.toml" file in the root directory of your project with contents
+like the following, and try again.
+
+[dciy.commands]
+prepare = ["script/bootstrap"]
+cibuild = ["script/cibuild"]
+EOF
+
     @build.update(
       :completed_at => Time.now,
       :successful   => false,
