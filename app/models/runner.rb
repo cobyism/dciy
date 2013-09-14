@@ -12,6 +12,7 @@ class Runner
     @project   = build.project
     @directory = @project.workspace_path
     @logger    = Logger.new(STDOUT)
+    @results   = []
   end
 
   def run_run_run
@@ -67,10 +68,16 @@ EOF
   end
 
   def run_ci
-    add_dciy_build_output "Running CI...\n"
-    project = @build.project
-    @result = in_terminal.run(project.ci_command, project.workspace_path) do |chunk|
-      add_output(chunk)
+    run_commands @project.ci_commands
+  end
+
+  def run_commands cmd_list
+    @project.ci_commands.inject(@results) do |results, cmd|
+      add_dciy_build_output "Running CI command <#{cmd}>...\n"
+      results << in_terminal.run(cmd, @project.workspace_path) do |chunk|
+        add_output(chunk)
+      end
+      results
     end
   end
 
@@ -86,11 +93,14 @@ EOF
   end
 
   def complete
-    @logger.info "Build #{@build.sha} exited with #{@result.success} got:\n #{@result.output}"
+    overall_success = @results.all?(&:success)
+    combined_output = @results.map(&:output).join("\n")
+
+    @logger.info "Build #{@project.repo} @ #{@build.sha} exited with #{overall_success} got:\n #{combined_output}"
     @build.update(
       :completed_at => Time.now,
-      :successful   => @result.success,
-      :output       => @build.output + @result.output
+      :successful   => overall_success,
+      :output       => @build.output + combined_output
     )
   end
 

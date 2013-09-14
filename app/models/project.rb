@@ -5,13 +5,13 @@ class Project < ActiveRecord::Base
     Rails.root.join("workspace", "project-#{self.id}-#{self.repo.gsub(/\//, '-')}")
   end
 
-  def ci_command
+  def ci_commands
     case
     when has_file?('dciy.toml')
       instructions = TOML.load_file(workspace_file 'dciy.toml')
       instructions['dciy']['commands']['cibuild']
     when has_file?('script/cibuild')
-      'script/cibuild'
+      ['script/cibuild']
     else
       raise CantFindBuildFile.new
     end
