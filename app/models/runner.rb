@@ -19,6 +19,7 @@ class Runner
     do_ascii_header
     begin
       do_checkout
+      run_prepare
       run_ci
     rescue CantFindBuildFile
       no_build_file
@@ -67,13 +68,17 @@ EOF
     in_terminal.run "git submodule update", @directory
   end
 
-  def run_ci
-    run_commands @project.ci_commands
+  def run_prepare
+    run_commands 'preparation', @project.prepare_commands
   end
 
-  def run_commands cmd_list
-    @project.ci_commands.inject(@results) do |results, cmd|
-      add_dciy_build_output "Running CI command <#{cmd}>...\n"
+  def run_ci
+    run_commands 'CI', @project.ci_commands
+  end
+
+  def run_commands category, cmd_list
+    cmd_list.inject(@results) do |results, cmd|
+      add_dciy_build_output "Running #{category} command <#{cmd}>...\n"
       results << in_terminal.run(cmd, @project.workspace_path) do |chunk|
         add_output(chunk)
       end
