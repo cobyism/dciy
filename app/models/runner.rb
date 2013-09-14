@@ -19,8 +19,7 @@ class Runner
     do_ascii_header
     begin
       do_checkout
-      run_prepare
-      run_ci
+      run_prepare && run_ci
     rescue CantFindBuildFile
       no_build_file
     rescue Interrupt, SystemExit
@@ -79,9 +78,11 @@ EOF
   def run_commands category, cmd_list
     cmd_list.inject(@results) do |results, cmd|
       add_dciy_build_output "Running #{category} command <#{cmd}>...\n"
-      results << in_terminal.run(cmd, @project.workspace_path) do |chunk|
+      r = in_terminal.run(cmd, @project.workspace_path) do |chunk|
         add_output(chunk)
       end
+      results << r
+      return false unless r.success
       results
     end
   end
