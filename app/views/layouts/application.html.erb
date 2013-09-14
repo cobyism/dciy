@@ -21,7 +21,7 @@
         <li class="project all-builds">
           <%= link_to "All Builds", root_path, :class => "#{'selected' if current_page?(root_path)}" %>
         </li>
-        <% Project.find(:all).each do |project| %>
+        <% Project.all.each do |project| %>
           <li class="project">
             <%= link_to project.repo, project_builds_path(project), :class => "#{'selected' if current_page?(project_builds_path(project))}" %>
           </li>
