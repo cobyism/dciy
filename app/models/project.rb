@@ -50,8 +50,6 @@ class Project < ActiveRecord::Base
       raise CantFindBuildFile.new
     end
 
-    puts @instructions.inspect
-
     @instructions
   end
 end
