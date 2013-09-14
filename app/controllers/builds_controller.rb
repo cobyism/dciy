@@ -19,7 +19,7 @@ class BuildsController < ApplicationController
 
   # GET /builds/new
   def new
-    @build = Build.new(:sha => "master")
+    @build = Build.new(:sha => "master", :project_id => params[:project_id])
   end
 
   # GET /builds/1/edit
