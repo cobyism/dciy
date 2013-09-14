@@ -76,14 +76,13 @@ EOF
   end
 
   def run_commands category, cmd_list
-    cmd_list.inject(@results) do |results, cmd|
+    cmd_list.each do |cmd|
       add_dciy_build_output "Running #{category} command <#{cmd}>...\n"
       r = in_terminal.run(cmd, @project.workspace_path) do |chunk|
         add_output(chunk)
       end
-      results << r
+      @results << r
       return false unless r.success
-      results
     end
   end
 
