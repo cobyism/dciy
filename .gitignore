@@ -15,4 +15,7 @@
 /log/*.log
 /tmp
 
+# Ignore vim swapfiles.
+*.swp
+
 /workspace
