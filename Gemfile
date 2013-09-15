@@ -17,7 +17,7 @@ gem 'foreman'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 
-group :test do
+group :development do
   gem 'rspec'
   gem 'rspec-rails'
 end
