@@ -72,10 +72,7 @@ EOF
   end
 
   def add_output(chunk)
-    output = @build.output
-    output << chunk
-    @build.output = output
-    @build.save
+    @build.update(:output => @build.output + chunk)
   end
 
   def add_dciy_build_output(message)
@@ -86,8 +83,7 @@ EOF
     @logger.info "Build #{@build.sha} exited with #{@result.success} got:\n #{@result.output}"
     @build.update(
       :completed_at => Time.now,
-      :successful   => @result.success,
-      :output       => @build.output + @result.output
+      :successful   => @result.success
     )
   end
 
