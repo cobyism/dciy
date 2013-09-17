@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-actions">
-    <%= link_to 'New Build', new_build_path, :class => "button" %>
+    <%= link_to 'New Build', @project ? new_project_build_path(@project) : new_build_path, :class => "button" %>
   </div>
   <div class="page-title">
     <% if @project %>
