@@ -8,7 +8,7 @@ class BuildsController < ApplicationController
       @project = Project.find(params[:project_id])
       @builds = @project.builds
     else
-      @builds = Build.all(:order => "created_at DESC")
+      @builds = Build.order("created_at DESC")
     end
   end
 
