@@ -23,25 +23,6 @@ The [`script/server`](./script/server) command should do all the bootstrapping a
 process starting necessary, and should give you a DCIY server running locally on
 at the following address: [`http://localhost:6161`](http://localhost:6161).
 
-## Contributing to DCIY
-
-I’d :heart: to receive contributions and feedback from anyone,
-and there’s more ways to do that than writing code.
-
-### Contributing code
-
-1. Fork the repository.
-2. Create a branch (e.g. `my-awesome-feature`) for the work you’re going to do.
-3. Make your awesome changes in your topic branch.
-4. Send a pull request from your branch to this repository.
-
-### Other ways to contribute
-
-- Try the project out yourself.
-- [File issues](https://github.com/cobyism/dciy/issues/new) about bugs, problems, or inconsistencies you run into.
-- [File issues](https://github.com/cobyism/dciy/issues/new) with suggestions, feature ideas, or UI mockups for improvements.
-- Read through the documentation (just this `README` for now), and look for ways it could be improved. Click "Edit" on the file and make the changes yourself if you can!
-
 ## Using DCIY
 
 ### Adding a project
@@ -65,6 +46,25 @@ DCIY will then go off and do the following:
 
 Keeping an eye on [`/builds`](http://localhost:6161/builds) will show you the status of the build
 as it runs in the background, and you can click on the build to view the output once it’s finished.
+
+## Contributing to DCIY
+
+I’d :heart: to receive contributions and feedback from anyone,
+and there’s more ways to do that than writing code.
+
+### Contributing code
+
+1. Fork the repository.
+2. Create a branch (e.g. `my-awesome-feature`) for the work you’re going to do.
+3. Make your awesome changes in your topic branch.
+4. Send a pull request from your branch to this repository.
+
+### Other ways to contribute
+
+- Try the project out yourself.
+- [File issues](https://github.com/cobyism/dciy/issues/new) about bugs, problems, or inconsistencies you run into.
+- [File issues](https://github.com/cobyism/dciy/issues/new) with suggestions, feature ideas, or UI mockups for improvements.
+- Read through the documentation (just this `README` for now), and look for ways it could be improved. Click "Edit" on the file and make the changes yourself if you can!
 
 ## License
 
