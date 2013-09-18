@@ -32,6 +32,20 @@ and click "New Project", and type in the `<owner>/<repo>` part of your GitHub pr
 (leave off the `https://github.com` and the `.git` parts). Submitting the form will
 give you a new project which you can run builds for.
 
+### Configuring a Build
+
+To tell DCIY how to build your project, add a file called `dciy.toml` to the top-level directory
+with contents like the following:
+
+```toml
+[dciy.commands]
+prepare = ["script/bootstrap"]
+cibuild = ["script/cibuild"]
+```
+
+Each step in `prepare`, then `cibuild`, will be executed in order to build and test your project.
+Add it, commit it, and push it out. Now you're ready to build!
+
 ### Triggering a Build
 
 Go to [`/builds`](http://localhost:6161/builds) and click "New Build". Enter the
