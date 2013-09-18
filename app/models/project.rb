@@ -28,12 +28,7 @@ class Project < ActiveRecord::Base
   end
 
   def instructions
-    return @instructions if @instructions
-
-    @instructions = BuildInstructions.new(
-      :prepare_cmds => [],
-      :ci_cmds => []
-    )
+    instructions = BuildInstructions.new([], [])
 
     case
     when has_file?('dciy.toml')
@@ -42,15 +37,15 @@ class Project < ActiveRecord::Base
       h = settings['dciy'] || {}
       cmds = h['commands'] || {}
 
-      @instructions.prepare_cmds = cmds['prepare'] || []
-      @instructions.ci_cmds = cmds['cibuild'] || []
+      instructions.prepare_cmds = cmds['prepare'] || []
+      instructions.ci_cmds = cmds['cibuild'] || []
     when has_file?('script/cibuild')
-      @instructions.ci_cmds = ['script/cibuild']
+      instructions.ci_cmds = ['script/cibuild']
     else
       raise CantFindBuildFile.new
     end
 
-    @instructions
+    instructions
   end
 end
 
