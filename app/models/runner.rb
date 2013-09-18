@@ -87,10 +87,7 @@ EOF
   end
 
   def add_output(chunk)
-    output = @build.output
-    output << chunk
-    @build.output = output
-    @build.save
+    @build.update(:output => @build.output + chunk)
   end
 
   def add_dciy_build_output(message)
@@ -105,7 +102,6 @@ EOF
     @build.update(
       :completed_at => Time.now,
       :successful   => overall_success,
-      :output       => @build.output + combined_output
     )
   end
 

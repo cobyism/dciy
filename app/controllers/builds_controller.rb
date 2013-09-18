@@ -8,7 +8,7 @@ class BuildsController < ApplicationController
       @project = Project.find(params[:project_id])
       @builds = @project.builds
     else
-      @builds = Build.all(:order => "created_at DESC")
+      @builds = Build.order("created_at DESC")
     end
   end
 
@@ -19,7 +19,7 @@ class BuildsController < ApplicationController
 
   # GET /builds/new
   def new
-    @build = Build.new(:sha => "master")
+    @build = Build.new(:sha => "master", :project_id => params[:project_id])
   end
 
   # GET /builds/1/edit

@@ -41,11 +41,11 @@ class Build < ActiveRecord::Base
         "#{status_word} in #{duration}"
       end
     when :pending
-      "Build started #{distance_of_time_in_words_to_now(started_at, true)} ago"
+      "Build started #{distance_of_time_in_words_to_now(started_at, :include_seconds => true)} ago"
     when :mia
       "Missing, presumed dead"
     when :queued
-      "#{status_word} #{distance_of_time_in_words_to_now(created_at, true)} ago"
+      "#{status_word} #{distance_of_time_in_words_to_now(created_at, :include_seconds => true)} ago"
     end
 
 
