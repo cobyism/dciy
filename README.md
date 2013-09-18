@@ -56,7 +56,7 @@ DCIY will then go off and do the following:
 - Run a `git fetch` to make sure it has everything locally it needs.
 - Checks out the project at the specified branch or commit.
 - Initiates and prepares submodules, if there are any.
-- Executes `script/cibuild` which should contain the commands to run the project’s test suite.
+- Uses your build configuration to run the project's test suite.
 
 Keeping an eye on [`/builds`](http://localhost:6161/builds) will show you the status of the build
 as it runs in the background, and you can click on the build to view the output once it’s finished.
