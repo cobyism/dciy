@@ -28,20 +28,29 @@ class Project < ActiveRecord::Base
   end
 
   def instructions
-    instructions = BuildInstructions.new([], [])
+    instructions = BuildInstructions.new
 
-    case
-    when has_file?('dciy.toml')
+    if has_file?('dciy.toml')
       settings = TOML.load_file(workspace_file 'dciy.toml')
 
       h = settings['dciy'] || {}
       cmds = h['commands'] || {}
 
-      instructions.prepare_cmds = cmds['prepare'] || []
-      instructions.ci_cmds = cmds['cibuild'] || []
-    when has_file?('script/cibuild')
+      instructions.prepare_cmds = cmds['prepare']
+      instructions.ci_cmds = cmds['cibuild']
+    end
+
+    if instructions.ci_cmds.nil? && has_file?('script/cibuild')
       instructions.ci_cmds = ['script/cibuild']
-    else
+    end
+
+    # Default to no preparation commands.
+    instructions.prepare_cmds ||= []
+
+    # Ensure that we've figured out how to build the project, either from
+    # dciy.toml or from a script/cibuild command. If neither are given,
+    # blow up!
+    if instructions.ci_cmds.nil? || instructions.ci_cmds.empty?
       raise CantFindBuildFile.new
     end
 
