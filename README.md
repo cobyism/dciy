@@ -34,9 +34,9 @@ give you a new project which you can run builds for.
 
 ### Configuring a Build
 
-By default, DCIY will build your project by executing `script/cibuild`. If it doesn't exist, or
-if you'd like to override the default commands, add a file called `dciy.toml` to your project's
-top-level directory that uses the following format:
+By default, DCIY will build your project by executing a file called `script/cibuild`. If
+you'd like to override this and customize your build, add a file called `dciy.toml` to your
+project's top-level directory. `dciy-toml` uses the following format:
 
 ```toml
 [dciy.commands]
@@ -44,9 +44,9 @@ prepare = ["script/bootstrap"]
 cibuild = ["script/cibuild"]
 ```
 
-The commands specified in `prepare`, if any, are run first, followed by the commands specified in
-the `cibuild` array. A build is marked as successful only if all of these commands exit with a
-successful (zero) exit status.
+Any commands listed in `prepare` are run first, followed by the ones specified in the `cibuild`
+array. A build is marked as successful only if all of these commands exit with successful
+(zero) exit statuses.
 
 Each time that your project is checked out, the `dciy.toml` file is rescanned for changes, so all you
 need to do change your build is commit it and push it.
