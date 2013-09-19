@@ -127,14 +127,17 @@ EOF
     @logger.info "Build #{@build.sha} could not run because no build information was found."
 
     failure_message = <<-EOF
-I don't know how to build this project!
+Whoops, I don't know how to build this project yet!
 
 Please create a "dciy.toml" file in the root directory of your project with contents
-like the following, and try again.
+like the following and try again.
 
 [dciy.commands]
 prepare = ["script/bootstrap"]
 cibuild = ["script/cibuild"]
+
+If you don't give me any cibuild commands to run, or if there's no dciy.toml file to be found
+at all, I'll try to run a file called "script/cibuild" instead.
 EOF
 
     @build.update(
