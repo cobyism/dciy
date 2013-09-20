@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  project_id: 1
+  started_at: 2013-09-04 14:48:16
+  completed_at: 2013-09-04 14:48:16
+  successful: false
+  output: MyText
+
+two:
+  project_id: 1
+  started_at: 2013-09-04 14:48:16
+  completed_at: 2013-09-04 14:48:16
+  successful: false
+  output: MyText
