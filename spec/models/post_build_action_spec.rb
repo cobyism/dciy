@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe PostBuildAction do
   let(:project) { Project.create! }
-  let(:action) { PostBuildAction.create! project: project }
 
   let(:successful_build) { Build.create! project: project, sha: 'master', successful: true }
   let(:failed_build) { Build.create! project: project, sha: 'master', successful: false }
@@ -23,6 +22,9 @@ describe PostBuildAction do
   it 'enforces a valid trigger_on_status' do
     expect(PostBuildAction.create project: project, trigger_on_status: 42).not_to be_valid
   end
+
+  # Save some redundancy in the specs below that determine which actions are triggered by
+  # which builds.
 
   def self.it_cares_about build_desc
     it "cares about #{build_desc.to_s.humanize.pluralize}" do
@@ -46,12 +48,16 @@ describe PostBuildAction do
   end
 
   context 'for failed builds' do
-    it "doesn't trigger on succeeded builds"
-    it 'triggers on failed builds'
+    let(:action) { project_action trigger_on_status: PostBuildAction::FAILURE }
+
+    it_doesnt_care_about :successful_build
+    it_cares_about :failed_build
   end
 
   context 'for every build' do
-    it 'triggers on succeeded builds'
-    it 'triggers on failed builds'
+    let(:action) { project_action trigger_on_status: PostBuildAction::ALL }
+
+    it_cares_about :successful_build
+    it_cares_about :failed_build
   end
 end

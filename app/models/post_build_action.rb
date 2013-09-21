@@ -11,7 +11,7 @@ class PostBuildAction < ActiveRecord::Base
   validates :trigger_on_status, presence: true, inclusion: { in: [SUCCESS, FAILURE, ALL] }
 
   def self.that_care_about build
-    triggers = [ALL, SUCCESS]
+    triggers = [ALL, build.successful? ? SUCCESS : FAILURE]
     build.project.post_build_actions.where(trigger_on_status: triggers)
   end
 end
