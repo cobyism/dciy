@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921181301) do
+ActiveRecord::Schema.define(version: 20130921192957) do
 
   create_table "builds", force: true do |t|
     t.integer  "project_id"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20130921181301) do
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "source_branch"
+    t.string   "trigger_on_branch"
     t.string   "target_repo_uri"
     t.string   "target_branch"
   end
