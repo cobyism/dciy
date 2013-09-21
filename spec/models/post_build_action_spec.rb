@@ -24,16 +24,25 @@ describe PostBuildAction do
     expect(PostBuildAction.create project: project, trigger_on_status: 42).not_to be_valid
   end
 
+  def self.it_cares_about build_desc
+    it "cares about #{build_desc.to_s.humanize.pluralize}" do
+      build = send build_desc
+      expect(PostBuildAction.that_care_about build).to eq([action])
+    end
+  end
+
+  def self.it_doesnt_care_about build_desc
+    it "doesn't care about #{build_desc.to_s.humanize.pluralize}" do
+      build = send build_desc
+      expect(PostBuildAction.that_care_about build).to be_empty
+    end
+  end
+
   context 'for successful builds' do
     let(:action) { project_action trigger_on_status: PostBuildAction::SUCCESS }
 
-    it 'cares about succeeded builds' do
-      expect(PostBuildAction.that_care_about successful_build).to eq([action])
-    end
-
-    it "doesn't care about failed builds" do
-      expect(PostBuildAction.that_care_about failed_build).to be_empty
-    end
+    it_cares_about :successful_build
+    it_doesnt_care_about :failed_build
   end
 
   context 'for failed builds' do
