@@ -10,6 +10,10 @@ class PostBuildAction < ActiveRecord::Base
   validates :project_id, presence: true
   validates :trigger_on_status, presence: true, inclusion: { in: [SUCCESS, FAILURE, ALL] }
 
+  def execute_for build
+    raise "#execute_for is not overridden in #{self.class}!"
+  end
+
   def self.that_care_about build
     triggers = [ALL, build.successful? ? SUCCESS : FAILURE]
     branches = [nil, build.sha]
