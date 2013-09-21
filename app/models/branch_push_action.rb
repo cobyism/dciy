@@ -1,0 +1,2 @@
+class BranchPushAction < PostBuildAction
+end
