@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921192957) do
+ActiveRecord::Schema.define(version: 20130921210937) do
 
   create_table "builds", force: true do |t|
     t.integer  "project_id"
@@ -28,9 +28,6 @@ ActiveRecord::Schema.define(version: 20130921192957) do
     t.string   "type"
     t.integer  "project_id"
     t.integer  "trigger_on_status"
-    t.boolean  "successful"
-    t.datetime "started_at"
-    t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "trigger_on_branch"
