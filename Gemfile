@@ -16,3 +16,8 @@ gem 'dotenv-rails'
 gem 'foreman'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
+
+group :development do
+  gem 'rspec'
+  gem 'rspec-rails'
+end
