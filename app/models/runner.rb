@@ -16,6 +16,7 @@ class Runner
 
   def run_run_run
     do_ascii_header
+    add_dciy_build_output "Aight, let's do this!"
     begin
       do_checkout
       run_ci
@@ -44,7 +45,6 @@ EOF
   end
 
   def do_checkout
-    add_dciy_build_output "Aight, let's do this!"
 
     @logger.info "Started building #{@project.repo} at #{@build.sha}"
     @build.update(:started_at => Time.now)
