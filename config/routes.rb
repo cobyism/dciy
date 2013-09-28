@@ -2,7 +2,7 @@ DCIY::Application.routes.draw do
   resources :builds
 
   resources :projects do
-    resources :builds
+    resources :builds, :except => [:edit, :update]
   end
   root to: "builds#index"
 

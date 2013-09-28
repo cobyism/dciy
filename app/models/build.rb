@@ -3,7 +3,7 @@ class Build < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
 
   belongs_to :project
-  validates_presence_of :project_id, :sha
+  validates_presence_of :project_id, :branch
 
   def ci_command
     "script/cibuild"

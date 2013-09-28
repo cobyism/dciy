@@ -11,15 +11,15 @@ describe Build do
 
   # Quickly create a valid build.
   def valid_build hash
-    attrs = { project_id: project.id, sha: 'master' }.merge(hash)
+    attrs = { project_id: project.id, branch: 'master' }.merge(hash)
     Build.create! attrs
   end
 
   it 'needs a project id' do
-    expect(Build.create(sha: 'master')).not_to be_valid
+    expect(Build.create(branch: 'master')).not_to be_valid
   end
 
-  it 'needs a sha' do
+  it 'needs a branch' do
     expect(Build.create(project_id: project.id)).not_to be_valid
   end
 
