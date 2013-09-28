@@ -46,7 +46,7 @@ EOF
 
   def do_checkout
 
-    @logger.info "Started building #{@project.repo} at #{@build.sha}"
+    @logger.info "Started building #{@project.repo} at #{Time.now}"
     @build.update(:started_at => Time.now)
 
     unless File.exists?(@directory)
