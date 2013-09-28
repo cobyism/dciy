@@ -49,13 +49,15 @@ EOF
     @logger.info "Started building #{@project.repo} at #{Time.now}"
     @build.update(:started_at => Time.now)
 
-    unless File.exists?(@directory)
+    if File.exists?(@directory)
+      add_dciy_build_output "Updating repository..."
+      in_terminal.run "git fetch origin", @directory
+    else
       add_dciy_build_output "Cloning repository..."
       in_terminal.run "git clone #{@project.repo_uri} #{@directory}"
     end
 
     add_dciy_build_output "Checking out project at #{sha_for_branch}..."
-    in_terminal.run "git fetch origin", @directory
 
     add_dciy_build_output in_terminal.run("git reset --hard #{sha_for_branch}", @directory).output
     # run init separately for compatibility with old versions of git
