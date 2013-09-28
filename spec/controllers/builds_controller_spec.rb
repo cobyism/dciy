@@ -43,23 +43,6 @@ describe BuildsController do
     expect(response).to be_success
   end
 
-  it "should get edit" do
-    get :edit, id: build
-
-    expect(assigns :build).to eq(build)
-    expect(response).to be_success
-  end
-
-  it "should update build" do
-    patch :update, id: build.id, build: { branch: 'new/branch' }
-
-    b = assigns :build
-    expect(b).to eq(build)
-    expect(b.branch).to eq('new/branch')
-
-    expect(response).to redirect_to(build_path(b))
-  end
-
   it "should destroy build" do
     expect { delete :destroy, id: build.id }.to change { Build.count }.by(-1)
 

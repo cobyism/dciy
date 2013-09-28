@@ -22,10 +22,6 @@ class BuildsController < ApplicationController
     @build = Build.new(:branch => "master", :project_id => params[:project_id])
   end
 
-  # GET /builds/1/edit
-  def edit
-  end
-
   # POST /builds
   # POST /builds.json
   def create
@@ -38,20 +34,6 @@ class BuildsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @build }
       else
         format.html { render action: 'new' }
-        format.json { render json: @build.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /builds/1
-  # PATCH/PUT /builds/1.json
-  def update
-    respond_to do |format|
-      if @build.update(build_params)
-        format.html { redirect_to @build, notice: 'Build was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
         format.json { render json: @build.errors, status: :unprocessable_entity }
       end
     end

@@ -23,10 +23,6 @@ describe Build do
     expect(Build.create(project_id: project.id)).not_to be_valid
   end
 
-  it 'finds a sha from the branch'
-
-  it 'marks the build as failed if it can’t determine sha from the branch'
-
   context 'an unstarted build' do
     let(:build) { valid_build(created_at: 1.minute.ago) }
 
