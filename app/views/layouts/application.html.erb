@@ -23,7 +23,7 @@
         </li>
         <% Project.all.each do |project| %>
           <li class="project">
-            <%= link_to project.repo, project_builds_path(project), :class => "#{'selected' if current_page?(project_builds_path(project))}" %>
+            <%= link_to project.repo, project_builds_path(project), :class => "#{'selected' if current_page?(project_builds_path(project)) || (@build && @build.project == project)}" %>
           </li>
         <% end %>
       </ul>
