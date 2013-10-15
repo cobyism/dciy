@@ -90,7 +90,7 @@ class Build < ActiveRecord::Base
   end
 
   def mark_status_on_github_as(state)
-    CommitStatus.mark(self.project.repo, self.sha, state)
+    CommitStatus.mark(self.id, state)
   end
 
 end
