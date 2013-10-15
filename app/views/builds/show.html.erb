@@ -17,14 +17,9 @@
 
 <p>
   <strong>Status:</strong>
-  <%= @build.status_phrase %>
+  <span class="js-build-status" data-status="<%= @build.successful %>"><%= @build.status_phrase %></span>
 </p>
 
-<p>
-  <strong>Successful:</strong>
-  <%= @build.successful %>
-</p>
-
-<pre class="build-output">
+<pre class="build-output js-build-output" data-uri="<%= build_path(@build, :format => :json) %>">
 <%= @build.output %>
 </pre>
