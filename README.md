@@ -16,6 +16,18 @@ DCIY does exactly this. There is no system for multiple users, or for managing S
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
 
+### A note about security
+
+DCIY runs all commands on your behalf, so it’s probably not a good idea to
+use DCIY in situations where you’re concerned about security. It is your
+responsibility to ensure that you trust the contents of the branches you build,
+and that you shut down the DCIY server when you’re not using it.
+
+I’d love to find ways of making this less of an issue in the future, such as
+providing a way to easily sandbox the build process (using some combination of
+technologies like Vagrant and Docker, maybe?), but even if that happens, it’s
+still important to be aware of what code you’re running on your machine.
+
 ## Getting DCIY running
 
 Run these commands from your terminal to get set up for hacking on this locally:
