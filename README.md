@@ -16,6 +16,19 @@ DCIY does exactly this. There is no system for multiple users, or for managing S
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
 
+### Alternatives that might suit you better
+
+I started this project because I wanted to run CI on some other private
+side-projects I’m working on, and couldn’t find anything else lightweight
+enough that suited my needs. It is not intended to be a a fully-fledged,
+production-ready CI environment, so if you want something more that’s also free,
+you should check out some of the following projects:
+
+- [Travis CI](https://travis-ci.org/) - If your project is public, this is probably your best option.
+- [Strider CD](http://stridercd.com/) - An open source continuous integration & deployment server written in Node.js.
+- [Kochiku](https://github.com/square/kochiku) (by [Square](https://squareup.com/)) - An open source distributed testing platform.
+- [Jenkins CI](http://jenkins-ci.org/) - Might be ugly, but it’s open source, widely used, and has a large following.
+
 ### A note about security
 
 DCIY runs all commands on your behalf, so it’s probably not a good idea to
