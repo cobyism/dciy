@@ -89,4 +89,8 @@ class Build < ActiveRecord::Base
     (Time.now - time) > 1.hour
   end
 
+  def mark_status_on_github_as(state)
+    CommitStatus.mark(self.id, state)
+  end
+
 end

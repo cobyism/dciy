@@ -75,6 +75,8 @@ EOF
     add_dciy_build_output "Setting up submodules, if you're into that kind of thing..."
     in_terminal.run "git submodule init", @directory
     in_terminal.run "git submodule update", @directory
+
+    @build.mark_status_on_github_as(:pending) if CommitStatus.enabled?
   end
 
   def run_ci
@@ -98,6 +100,7 @@ EOF
       :completed_at => Time.now,
       :successful   => @result.success
     )
+    @build.mark_status_on_github_as(@result.success ? :success : :failure) if CommitStatus.enabled?
   end
 
   def fail(exception)
@@ -116,6 +119,8 @@ EOF
       :successful   => false,
       :output       => @build.output + failure_message
     )
+
+    @build.mark_status_on_github_as(:error) if CommitStatus.enabled?
   end
 
   def in_terminal

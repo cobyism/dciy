@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  repo: MyString
+  id: 1
+  repo: project/one
 
 two:
-  repo: MyString
+  id: 2
+  repo: something/else
