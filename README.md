@@ -1,10 +1,17 @@
 # Do Continuous Integration Yourself
 
-‘Nuff said.
+DCIY lets you do continuous integration testing locally through a web interface.
 
-## Philosopy
+### Screenshots
 
-If you can run your tests for a project locally, then you should be able to run CI locally too.
+![All builds](https://f.cloud.github.com/assets/296432/1341069/bfd8aec0-3641-11e3-81fb-663f6a181a07.png)
+
+![Build output](https://f.cloud.github.com/assets/296432/1341077/f177b20a-3641-11e3-967b-f2dcdedc7fc9.png)
+
+## Why DCIY?
+
+If you can run your tests for a project locally in the terminal, then you should
+be able to run CI with a web interface and keep track of build output locally too.
 DCIY does exactly this. There is no system for multiple users, or for managing SSH keypairs,
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
