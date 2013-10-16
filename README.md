@@ -1,13 +1,45 @@
 # Do Continuous Integration Yourself
 
-‘Nuff said.
+DCIY lets you do continuous integration testing locally through a web interface.
 
-## Philosopy
+### Screenshots
 
-If you can run your tests for a project locally, then you should be able to run CI locally too.
+![All builds](https://f.cloud.github.com/assets/296432/1341069/bfd8aec0-3641-11e3-81fb-663f6a181a07.png)
+
+![Build output](https://f.cloud.github.com/assets/296432/1341355/b31f82a2-3647-11e3-8216-7a90a3512aa3.png)
+
+## Why DCIY?
+
+If you can run your tests for a project locally in the terminal, then you should
+be able to run CI with a web interface and keep track of build output locally too.
 DCIY does exactly this. There is no system for multiple users, or for managing SSH keypairs,
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
+
+### Alternatives that might suit you better
+
+I started this project because I wanted to run CI on some other private
+side-projects I’m working on, and couldn’t find anything else lightweight
+enough that suited my needs. It is not intended to be a a fully-fledged,
+production-ready CI environment, so if you want something more that’s also free,
+you should check out some of the following projects:
+
+- [Travis CI](https://travis-ci.org/) - If your project is public, this is probably your best option.
+- [Strider CD](http://stridercd.com/) - An open source continuous integration & deployment server written in Node.js.
+- [Kochiku](https://github.com/square/kochiku) (by [Square](https://squareup.com/)) - An open source distributed testing platform.
+- [Jenkins CI](http://jenkins-ci.org/) - Might be ugly, but it’s open source, widely used, and has a large following.
+
+### A note about security
+
+DCIY runs all commands on your behalf, so it’s probably not a good idea to
+use DCIY in situations where you’re concerned about security. It is your
+responsibility to ensure that you trust the contents of the branches you build,
+and that you shut down the DCIY server when you’re not using it.
+
+I’d love to find ways of making this less of an issue in the future, such as
+providing a way to easily sandbox the build process (using some combination of
+technologies like Vagrant and Docker, maybe?), but even if that happens, it’s
+still important to be aware of what code you’re running on your machine.
 
 ## Getting DCIY running
 
