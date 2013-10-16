@@ -32,6 +32,34 @@ and click "New Project", and type in the `<owner>/<repo>` part of your GitHub pr
 (leave off the `https://github.com` and the `.git` parts). Submitting the form will
 give you a new project which you can run builds for.
 
+### Configuring a Build
+
+By default, DCIY will build your project by executing a file called `script/cibuild`. If
+you'd like to override this and customize your build, add a file called `dciy.toml` to your
+project's top-level directory. `dciy.toml` uses the following format:
+
+```toml
+[dciy.commands]
+prepare = ["script/bootstrap"]
+cibuild = ["script/cibuild"]
+```
+
+You can specify more than one command for either of the steps by just adding elements to the array:
+
+```toml
+[dciy.commands]
+prepare = ["bundle install", "bundle exec rake db:migrate"]
+cibuild = ["onecommand", "anothercommand"]
+```
+
+Any commands listed in `prepare` are run first, followed by the ones specified in the `cibuild`
+array. A build is marked as successful only if all of these commands exit with successful
+(zero) exit statuses.
+
+Each time that your project is checked out, the `dciy.toml` file is rescanned for changes, so all you
+need to do change your build is commit the updated command and DCIY will know
+about it the next time it tries to build your branch.
+
 ### Triggering a Build
 
 Go to [`/builds`](http://localhost:6161/builds) and click "New Build". Enter the
@@ -42,7 +70,7 @@ DCIY will then go off and do the following:
 - Run a `git fetch` to make sure it has everything locally it needs.
 - Checks out the project at the specified branch or commit.
 - Initiates and prepares submodules, if there are any.
-- Executes `script/cibuild` which should contain the commands to run the project’s test suite.
+- Uses your build configuration to run the project's test suite.
 
 Keeping an eye on [`/builds`](http://localhost:6161/builds) will show you the status of the build
 as it runs in the background, and you can click on the build to view the output once it’s finished.
