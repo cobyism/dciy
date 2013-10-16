@@ -118,7 +118,7 @@ EOF
       :completed_at => Time.now,
       :successful   => overall_success,
     )
-    @build.mark_status_on_github_as(@result.success ? :success : :failure) if CommitStatus.enabled?
+    @build.mark_status_on_github_as(overall_success ? :success : :failure) if CommitStatus.enabled?
   end
 
   def fail(exception)
