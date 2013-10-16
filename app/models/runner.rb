@@ -14,6 +14,7 @@ class Runner
     @project   = build.project
     @directory = @project.workspace_path
     @logger    = Logger.new(STDOUT)
+    @results   = []
   end
 
   def run_run_run
@@ -21,7 +22,9 @@ class Runner
     add_dciy_build_output "Aight, let's do this!"
     begin
       do_checkout
-      run_ci
+      run_prepare && run_ci
+    rescue CantFindBuildFile
+      no_build_file
     rescue Interrupt, SystemExit
       raise
     rescue Exception => e
@@ -79,10 +82,22 @@ EOF
     @build.mark_status_on_github_as(:pending) if CommitStatus.enabled?
   end
 
+  def run_prepare
+    run_commands 'preparation', @project.prepare_commands
+  end
+
   def run_ci
-    add_dciy_build_output "Running CI...\n"
-    @result = in_terminal.run(@build.ci_command, @build.project.workspace_path) do |chunk|
-      add_output(chunk)
+    run_commands 'CI', @project.ci_commands
+  end
+
+  def run_commands category, cmd_list
+    cmd_list.each do |cmd|
+      add_dciy_build_output "Running #{category} command <#{cmd}>...\n"
+      r = in_terminal.run(cmd, @project.workspace_path) do |chunk|
+        add_output(chunk)
+      end
+      @results << r
+      return false unless r.success
     end
   end
 
@@ -95,12 +110,15 @@ EOF
   end
 
   def complete
-    @logger.info "Build #{@build.sha} exited with #{@result.success} got:\n #{@result.output}"
+    overall_success = @results.all?(&:success)
+    combined_output = @results.map(&:output).join("\n")
+
+    @logger.info "Build #{@project.repo} @ #{@build.sha} exited with #{overall_success} got:\n #{combined_output}"
     @build.update(
       :completed_at => Time.now,
-      :successful   => @result.success
+      :successful   => overall_success,
     )
-    @build.mark_status_on_github_as(@result.success ? :success : :failure) if CommitStatus.enabled?
+    @build.mark_status_on_github_as(overall_success ? :success : :failure) if CommitStatus.enabled?
   end
 
   def fail(exception)
@@ -121,6 +139,30 @@ EOF
     )
 
     @build.mark_status_on_github_as(:error) if CommitStatus.enabled?
+  end
+
+  def no_build_file
+    @logger.info "Build #{@build.sha} could not run because no build information was found."
+
+    failure_message = <<-EOF
+Whoops, I don't know how to build this project yet!
+
+Please create a "dciy.toml" file in the root directory of your project with contents
+like the following and try again.
+
+[dciy.commands]
+prepare = ["script/bootstrap"]
+cibuild = ["script/cibuild"]
+
+If you don't give me any cibuild commands to run, or if there's no dciy.toml file to be found
+at all, I'll try to run a file called "script/cibuild" instead.
+EOF
+
+    @build.update(
+      :completed_at => Time.now,
+      :successful   => false,
+      :output       => @build.output + failure_message
+    )
   end
 
   def in_terminal

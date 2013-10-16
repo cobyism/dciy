@@ -5,10 +5,6 @@ class Build < ActiveRecord::Base
   belongs_to :project
   validates_presence_of :project_id, :branch
 
-  def ci_command
-    "script/cibuild"
-  end
-
   def duration
     unless started_at.nil?
       unless completed_at.nil?
