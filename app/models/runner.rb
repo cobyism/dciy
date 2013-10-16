@@ -3,6 +3,8 @@
 
 class Runner
 
+  class BranchNotFoundError < StandardError; end
+
   def self.go_nuts_on(build)
     new(build).run_run_run
   end
@@ -17,6 +19,7 @@ class Runner
 
   def run_run_run
     do_ascii_header
+    add_dciy_build_output "Aight, let's do this!"
     begin
       do_checkout
       run_prepare && run_ci
@@ -47,24 +50,36 @@ EOF
   end
 
   def do_checkout
-    add_dciy_build_output "Aight, let's do this!"
 
-    @logger.info "Started building #{@project.repo} at #{@build.sha}"
+    @logger.info "Started building #{@project.repo} at #{Time.now}"
     @build.update(:started_at => Time.now)
 
-    unless File.exists?(@directory)
+    if File.exists?(@directory)
+      add_dciy_build_output "Updating repository..."
+      in_terminal.run "git fetch origin", @directory
+    else
       add_dciy_build_output "Cloning repository..."
       in_terminal.run "git clone #{@project.repo_uri} #{@directory}"
     end
 
-    add_dciy_build_output "Checking out project at #{sha_for_branch}..."
-    in_terminal.run "git fetch origin", @directory
+    add_dciy_build_output "Looking up SHA for branch '#{@build.branch}'"
+    if sha = find_sha_for_branch(@build.branch)
+      add_dciy_build_output "SHA to build is #{sha}"
+      @build.update(:sha => sha)
+    else
+      add_dciy_build_output "Couldn’t find a SHA for that branch! Failing..."
+      raise BranchNotFoundError, "Failed to find SHA for branch '#{@build.branch}'"
+    end
 
+    add_dciy_build_output "Checking out project at #{@build.sha}..."
     add_dciy_build_output in_terminal.run("git reset --hard #{sha_for_branch}", @directory).output
+
     # run init separately for compatibility with old versions of git
     add_dciy_build_output "Setting up submodules, if you're into that kind of thing..."
     in_terminal.run "git submodule init", @directory
     in_terminal.run "git submodule update", @directory
+
+    @build.mark_status_on_github_as(:pending) if CommitStatus.enabled?
   end
 
   def run_prepare
@@ -103,6 +118,7 @@ EOF
       :completed_at => Time.now,
       :successful   => overall_success,
     )
+    @build.mark_status_on_github_as(@result.success ? :success : :failure) if CommitStatus.enabled?
   end
 
   def fail(exception)
@@ -121,6 +137,8 @@ EOF
       :successful   => false,
       :output       => @build.output + failure_message
     )
+
+    @build.mark_status_on_github_as(:error) if CommitStatus.enabled?
   end
 
   def no_build_file
@@ -155,12 +173,12 @@ EOF
     @build.sha.match(/\b[0-9a-f]{5,40}\b/) ? @build.sha : find_head(@build.sha)
   end
 
-  def find_head(ref)
-    result = in_terminal.run("git ls-remote --heads #{@project.repo_uri} #{ref}")
-    unless result.output.nil?
+  def find_sha_for_branch(branch)
+    result = in_terminal.run("git ls-remote --heads #{@project.repo_uri} #{branch}")
+    if !result.output.nil?
       result.output.split.first
     else
-      "master"
+      false
     end
   end
 end

@@ -14,6 +14,12 @@ gem 'jbuilder', '~> 1.2'
 # This App
 gem 'dotenv-rails'
 gem 'foreman'
+gem 'rest-client'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'toml'
+
+group :development do
+  gem 'rspec'
+  gem 'rspec-rails'
+end

@@ -3,7 +3,7 @@ class Build < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
 
   belongs_to :project
-  validates_presence_of :project_id, :sha
+  validates_presence_of :project_id, :branch
 
   def duration
     unless started_at.nil?
@@ -83,6 +83,10 @@ class Build < ActiveRecord::Base
 
   def ages_ago(time)
     (Time.now - time) > 1.hour
+  end
+
+  def mark_status_on_github_as(state)
+    CommitStatus.mark(self.id, state)
   end
 
 end
