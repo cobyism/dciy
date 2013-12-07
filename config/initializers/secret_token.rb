@@ -9,4 +9,8 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-DCIY::Application.config.secret_key_base = ENV['RAILS_SECRET_TOKEN']
+DCIY::Application.config.secret_key_base = if Rails.env.development? or Rails.env.test?
+  ('secret' * 5)
+else
+  ENV['RAILS_SECRET_TOKEN']
+end
