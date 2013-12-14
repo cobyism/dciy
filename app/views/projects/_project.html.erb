@@ -1,0 +1,10 @@
+<li class="project-info">
+  <%= link_to project.repo, project %>
+  <span class="controls">
+    <%= link_to 'Edit', edit_project_path(project),
+      class: "button small" %>
+    <%= link_to 'Remove', project, method: :delete,
+      data: { confirm: 'Are you sure?' },
+      class: "button button-danger small" %>
+  </span>
+</li>

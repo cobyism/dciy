@@ -1,27 +1,13 @@
-<h1>Listing projects</h1>
+<div class="page-header">
+  <div class="page-title">
+    <h1>Manage Projects</h1>
+  </div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Repo</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.repo %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<ul>
+  <%= render @projects %>
+</ul>
 
-<br>
 
-<%= link_to 'New Project', new_project_path %>
+<%= link_to 'New Project', new_project_path, class: "button" %>
