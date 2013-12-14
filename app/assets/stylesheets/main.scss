@@ -7,12 +7,32 @@
   padding: 0;
 }
 
-html, body {
+@mixin dciy-type {
   font-family: "Roboto", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  color: #444;
+}
+
+html, body {
+  @include dciy-type;
   font-size: 16px;
   line-height: 1em;
-  color: #444;
   background: #eee;
+}
+
+div.field {
+  $field-font-size: 12px;
+  input {
+    @include dciy-type;
+    font-size: $field-font-size;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  span {
+    font-size: $field-font-size;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
