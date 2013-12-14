@@ -4,21 +4,25 @@
   </div>
 </div>
 
-<p>
-  <strong>Branch:</strong>
-  <%= @build.branch %>
-</p>
-
-<p>
-  <strong>SHA found from branch:</strong>
-  <%= @build.sha %>
-</p>
+<dl>
+  <dt>Branch</dt>
+  <dd><%= @build.branch %></dd>
 
 
-<p>
-  <strong>Status:</strong>
-  <span class="js-build-status" data-status="<%= @build.successful %>"><%= @build.status_phrase %></span>
-</p>
+  <dt>SHA</dt>
+  <dd><%= @build.sha %></dd>
+
+  <dt>Status</dt>
+  <dd>
+    <span class="js-build-status" data-status="<%= @build.successful %>">
+      <%= @build.status_phrase %>
+    </span>
+  </dd>
+</dl>
+
+
+
+
 
 <pre class="build-output js-build-output" data-uri="<%= build_path(@build, :format => :json) %>">
 <%= @build.output %>

@@ -37,3 +37,19 @@ li {
   letter-spacing: -1px;
   text-shadow: 0 1px 0 #fff;
 }
+
+dl {
+  margin-bottom: 1em;
+}
+
+dt {
+  font-weight: bold;
+  float: left;
+  text-align: right;
+  width: $component-width-left;
+}
+
+dd {
+  margin-left: ($component-width-left + 10px);
+  margin-bottom: 0.35em;
+}
