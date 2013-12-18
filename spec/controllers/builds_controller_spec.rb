@@ -15,7 +15,7 @@ describe BuildsController do
     get :new
 
     b = assigns :build
-    expect(b.sha).to eq('master')
+    expect(b.branch).to eq('master')
 
     expect(response).to be_success
   end
@@ -24,14 +24,14 @@ describe BuildsController do
     expect(BuildWorker).to receive(:perform_async)
 
     expect do
-      post :create, build: { project_id: project, sha: 'some-branch' }
+      post :create, build: { project_id: project, branch: 'some-branch' }
     end.to change { Build.count }.by(1)
 
     b = assigns :build
 
     expect(b).not_to be_nil
     expect(b.project).to eq(project)
-    expect(b.sha).to eq('some-branch')
+    expect(b.branch).to eq('some-branch')
 
     expect(response).to redirect_to(build_path(b))
   end
@@ -41,23 +41,6 @@ describe BuildsController do
 
     expect(assigns :build).to eq(build)
     expect(response).to be_success
-  end
-
-  it "should get edit" do
-    get :edit, id: build
-
-    expect(assigns :build).to eq(build)
-    expect(response).to be_success
-  end
-
-  it "should update build" do
-    patch :update, id: build.id, build: { sha: 'new/branch' }
-
-    b = assigns :build
-    expect(b).to eq(build)
-    expect(b.sha).to eq('new/branch')
-
-    expect(response).to redirect_to(build_path(b))
   end
 
   it "should destroy build" do

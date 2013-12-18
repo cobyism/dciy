@@ -1,13 +1,45 @@
 # Do Continuous Integration Yourself
 
-‘Nuff said.
+DCIY lets you do continuous integration testing locally through a web interface.
 
-## Philosopy
+### Screenshots
 
-If you can run your tests for a project locally, then you should be able to run CI locally too.
+![All builds](https://f.cloud.github.com/assets/296432/1341069/bfd8aec0-3641-11e3-81fb-663f6a181a07.png)
+
+![Build output](https://f.cloud.github.com/assets/296432/1341355/b31f82a2-3647-11e3-8216-7a90a3512aa3.png)
+
+## Why DCIY?
+
+If you can run your tests for a project locally in the terminal, then you should
+be able to run CI with a web interface and keep track of build output locally too.
 DCIY does exactly this. There is no system for multiple users, or for managing SSH keypairs,
 or anything else—all DCIY does is provide a web interface for checking out Git repositories
 and running CI on them, all as the same user (you) that is firing up the DCIY server.
+
+### Alternatives that might suit you better
+
+I started this project because I wanted to run CI on some other private
+side-projects I’m working on, and couldn’t find anything else lightweight
+enough that suited my needs. It is not intended to be a a fully-fledged,
+production-ready CI environment, so if you want something more that’s also free,
+you should check out some of the following projects:
+
+- [Travis CI](https://travis-ci.org/) - If your project is public, this is probably your best option.
+- [Strider CD](http://stridercd.com/) - An open source continuous integration & deployment server written in Node.js.
+- [Kochiku](https://github.com/square/kochiku) (by [Square](https://squareup.com/)) - An open source distributed testing platform.
+- [Jenkins CI](http://jenkins-ci.org/) - Might be ugly, but it’s open source, widely used, and has a large following.
+
+### A note about security
+
+DCIY runs all commands on your behalf, so it’s probably not a good idea to
+use DCIY in situations where you’re concerned about security. It is your
+responsibility to ensure that you trust the contents of the branches you build,
+and that you shut down the DCIY server when you’re not using it.
+
+I’d love to find ways of making this less of an issue in the future, such as
+providing a way to easily sandbox the build process (using some combination of
+technologies like Vagrant and Docker, maybe?), but even if that happens, it’s
+still important to be aware of what code you’re running on your machine.
 
 ## Getting DCIY running
 
@@ -32,6 +64,34 @@ and click "New Project", and type in the `<owner>/<repo>` part of your GitHub pr
 (leave off the `https://github.com` and the `.git` parts). Submitting the form will
 give you a new project which you can run builds for.
 
+### Configuring a Build
+
+By default, DCIY will build your project by executing a file called `script/cibuild`. If
+you'd like to override this and customize your build, add a file called `dciy.toml` to your
+project's top-level directory. `dciy.toml` uses the following format:
+
+```toml
+[dciy.commands]
+prepare = ["script/bootstrap"]
+cibuild = ["script/cibuild"]
+```
+
+You can specify more than one command for either of the steps by just adding elements to the array:
+
+```toml
+[dciy.commands]
+prepare = ["bundle install", "bundle exec rake db:migrate"]
+cibuild = ["onecommand", "anothercommand"]
+```
+
+Any commands listed in `prepare` are run first, followed by the ones specified in the `cibuild`
+array. A build is marked as successful only if all of these commands exit with successful
+(zero) exit statuses.
+
+Each time that your project is checked out, the `dciy.toml` file is rescanned for changes, so all you
+need to do change your build is commit the updated command and DCIY will know
+about it the next time it tries to build your branch.
+
 ### Triggering a Build
 
 Go to [`/builds`](http://localhost:6161/builds) and click "New Build". Enter the
@@ -42,7 +102,7 @@ DCIY will then go off and do the following:
 - Run a `git fetch` to make sure it has everything locally it needs.
 - Checks out the project at the specified branch or commit.
 - Initiates and prepares submodules, if there are any.
-- Executes `script/cibuild` which should contain the commands to run the project’s test suite.
+- Uses your build configuration to run the project's test suite.
 
 Keeping an eye on [`/builds`](http://localhost:6161/builds) will show you the status of the build
 as it runs in the background, and you can click on the build to view the output once it’s finished.
