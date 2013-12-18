@@ -32,6 +32,7 @@ class Runner
     else
       complete
     end
+    post_build
   end
 
   def do_ascii_header
@@ -163,6 +164,12 @@ EOF
       :successful   => false,
       :output       => @build.output + failure_message
     )
+  end
+
+  def post_build
+    PostBuildAction.that_care_about(@build).each do |action|
+      action.execute_within self
+    end
   end
 
   def in_terminal
