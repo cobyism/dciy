@@ -3,9 +3,9 @@ require 'spec_helper'
 describe PostBuildAction do
   let(:project) { Project.create! }
 
-  let(:successful_build) { Build.create! project: project, sha: 'master', successful: true }
-  let(:failed_build) { Build.create! project: project, sha: 'master', successful: false }
-  let(:deploy_build) { Build.create! project: project, sha: 'deploy', successful: true }
+  let(:successful_build) { Build.create! project: project, branch: 'master', successful: true }
+  let(:failed_build) { Build.create! project: project, branch: 'master', successful: false }
+  let(:deploy_build) { Build.create! project: project, branch: 'deploy', successful: true }
 
   def project_action hash
     attrs = { project: project }.merge hash

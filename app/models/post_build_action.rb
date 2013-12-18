@@ -16,7 +16,7 @@ class PostBuildAction < ActiveRecord::Base
 
   def self.that_care_about build
     triggers = [ALL, build.successful? ? SUCCESS : FAILURE]
-    branches = [nil, build.sha]
+    branches = [nil, build.branch]
     build.project.post_build_actions.where(trigger_on_status: triggers, trigger_on_branch: branches)
   end
 end

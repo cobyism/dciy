@@ -36,7 +36,7 @@ describe BranchPushAction do
       target_branch: 'master'
     )
 
-    build = Build.create!(project: project, sha: 'deploy')
+    build = Build.create!(project: project, branch: 'deploy')
 
     command = double('Command')
     runner = double('Runner')
