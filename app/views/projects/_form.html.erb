@@ -1,3 +1,8 @@
+<% # We should move this sort of logic to a view class %>
+<% return_path = if @project.new_record? then root_path else
+  project_builds_path(@project) end %>
+
+
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -24,5 +29,7 @@
   </div>
   <div class="actions">
     <%= f.submit class: "button" %>
+     or
+    <%= link_to "Go Back", return_path, class: "button" %>
   </div>
 <% end %>
