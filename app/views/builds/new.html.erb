@@ -28,6 +28,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit class: "button" %> <%= link_to 'Back', builds_path %>
+    <%= f.submit "Punch it, Chewie!", class: "button" %>
+      or <%= link_to 'Abort and go back', project_builds_path(@project), class: "button" %>
   </div>
 <% end %>

@@ -20,6 +20,7 @@ class BuildsController < ApplicationController
 
   # GET /builds/new
   def new
+    @project = Project.find params[:project_id]
     @build = Build.new(:branch => "master", :project_id => params[:project_id])
   end
 
