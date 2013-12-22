@@ -6,7 +6,7 @@ $dciy-orange: #f90;
 $dciy-grey: #888;
 
 // Sizes
-$component-width-left: 160px;
+$description-title-width: 4em;
 
 @mixin gradient($start: #f3f3f3, $end: #eee){
   background-color: $end;
