@@ -19,7 +19,7 @@ html, body {
   background: #eee;
 }
 
-div.field {
+.field {
   $field-font-size: 12px;
   input {
     @include dciy-type;
@@ -66,10 +66,10 @@ dt {
   font-weight: bold;
   float: left;
   text-align: right;
-  width: $component-width-left;
+  width: $description-title-width;
 }
 
 dd {
-  margin-left: ($component-width-left + 10px);
+  margin-left: ($description-title-width + 0.5em);
   margin-bottom: 0.35em;
 }
