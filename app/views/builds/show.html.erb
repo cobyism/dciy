@@ -10,7 +10,11 @@
 
 
   <dt>SHA</dt>
-  <dd><%= @build.sha || "HEAD" %></dd>
+  <dd>
+    <span class="js-build-sha">
+      <%= @build.sha || "HEAD" %>
+    </span>
+  </dd>
 
   <dt>Status</dt>
   <dd>
