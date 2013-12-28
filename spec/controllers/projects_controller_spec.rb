@@ -3,12 +3,6 @@ require 'spec_helper'
 describe ProjectsController do
   let(:project) { projects(:one) }
 
-  it "should get index" do
-    get :index
-    expect(response).to be_success
-    expect(assigns :projects).not_to be_nil
-  end
-
   it "should get new" do
     get :new
     expect(response).to be_success
@@ -48,6 +42,6 @@ describe ProjectsController do
   it "should destroy project" do
     expect { delete :destroy, id: project }.to change { Project.count }.by(-1)
 
-    expect(response).to redirect_to(projects_path)
+    expect(response).to redirect_to(root_path)
   end
 end
