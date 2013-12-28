@@ -2,9 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+currentPath = window.location.pathname
+
 $ ->
   status = $('.js-build-status').attr('data-status')
-  if status != "true" && status != "false"
+  # if status not set AND not on new_build_path
+  if status != "true" && status != "false" && /builds\/\d+/.test(currentPath)
     window.buildPollerId = setInterval ->
       updateBuild()
     , 1000
