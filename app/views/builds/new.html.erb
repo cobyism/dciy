@@ -1,5 +1,5 @@
-<% build_abort_path = if @project
-  then project_builds_path(@project) else root_path end %>
+<% build_abort_path = if @build.project_id?
+  then project_builds_path(@build.project) else root_path end %>
 
 <div class="page-header">
   <div class="page-title">

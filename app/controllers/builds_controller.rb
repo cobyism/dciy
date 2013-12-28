@@ -20,14 +20,8 @@ class BuildsController < ApplicationController
 
   # GET /builds/new
   def new
-    build_info = { branch: "master" }
-
-    if params[:project_id]
-      @project = Project.find params[:project_id]
-      build_info[:project_id] = @project
-    end
-
-    @build = Build.new build_info
+    @build = Build.new branch: "master"
+    @build.project = Project.find params[:project_id] if params[:project_id]
   end
 
   # POST /builds
