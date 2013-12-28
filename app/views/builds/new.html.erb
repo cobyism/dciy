@@ -1,3 +1,6 @@
+<% build_abort_path = if @project
+  then project_builds_path(@project) else root_path end %>
+
 <div class="page-header">
   <div class="page-title">
     <h1>New Build</h1>
@@ -29,6 +32,6 @@
 
   <div class="actions">
     <%= f.submit "Punch it, Chewie!", class: "button" %>
-      or <%= link_to 'Abort and go back', project_builds_path(@project), class: "button" %>
+      or <%= link_to 'Abort and go back', build_abort_path, class: "button" %>
   </div>
 <% end %>
