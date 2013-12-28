@@ -18,7 +18,8 @@
 
   <div class="field">
     <%= f.label :repo, "Repository URL" %><br>
-    <span>https://github.com/</span><%= f.text_field :repo, :placeholder => "owner/repository" %>
+    <span class="description">https://github.com/</span>
+    <%= f.text_field :repo, :placeholder => "owner/repository" %>
   </div>
   <div class="actions">
     <%= f.submit class: "button" %>

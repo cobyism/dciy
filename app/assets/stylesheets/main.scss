@@ -20,18 +20,17 @@ html, body {
 }
 
 .field {
-  $field-font-size: 12px;
   input {
     @include dciy-type;
-    font-size: $field-font-size;
+    font-size: $form-field-font-size;
   }
 
   label {
     font-weight: bold;
   }
 
-  span {
-    font-size: $field-font-size;
+  .description {
+    font-size: $form-field-font-size;
   }
 }
 
@@ -72,12 +71,4 @@ dt {
 dd {
   margin-left: ($description-title-width + 0.5em);
   margin-bottom: 0.35em;
-}
-
-hr {
-  background-color: #ccc;
-  height: 1px;
-  border: 0px;
-  color: #ccc;
-  margin: 1em 0;
 }
