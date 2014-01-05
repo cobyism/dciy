@@ -17,9 +17,9 @@ updateBuild = ->
 
 updateFields = (build) ->
   buildOutput = $('.js-build-output')
-  buildOutput.html(build.output)
+  buildOutput.text(build.output)
   buildOutput[0].scrollTop = buildOutput[0].scrollHeight
-  $('.js-build-status').html(build.status_phrase)
+  $('.js-build-status').text(build.status_phrase)
   if build.successful isnt null
     $('.js-build-status').attr('data-status', build.successful)
     clearInterval(window.buildPollerId)
