@@ -16,10 +16,13 @@ describe ProjectsController do
   end
 
   it "should create project" do
-    expect { post :create, project: { repo: 'foo/bar.git' } }.to change { Project.count }.by(1)
+    expect do
+      post :create, project: { repo: 'foo/bar.git', github_host: 'github.internal.com' }
+    end.to change { Project.count }.by(1)
 
     p = assigns :project
     expect(p.repo).to eq('foo/bar.git')
+    expect(p.github_host).to eq('github.internal.com')
 
     expect(response).to redirect_to(project_path(p))
   end
@@ -37,10 +40,14 @@ describe ProjectsController do
   end
 
   it "should update project" do
-    patch :update, id: project, project: { repo: 'something/different.git' }
+    patch :update, id: project, project: {
+      repo: 'something/different.git',
+      github_host: 'github.something.com'
+    }
 
     p = assigns :project
     expect(p.repo).to eq('something/different.git')
+    expect(p.github_host).to eq('github.something.com')
 
     assert_redirected_to project_path(assigns(:project))
   end
