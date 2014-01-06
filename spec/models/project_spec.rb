@@ -9,7 +9,7 @@ describe Project do
     end
 
     it "locates the base URI for github's API" do
-      expect(project.api_uri).to eq('https://api.github.com/')
+      expect(project.api_uri).to eq('https://api.github.com')
     end
   end
 
@@ -23,7 +23,7 @@ describe Project do
     end
 
     it 'locates the API' do
-      expect(project.api_uri).to eq('https://github.internal.com/api/v3/')
+      expect(project.api_uri).to eq('https://github.internal.com/api/v3')
     end
   end
 

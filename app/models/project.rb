@@ -21,9 +21,9 @@ class Project < ActiveRecord::Base
 
   def api_uri
     if github_host == "github.com"
-      "https://api.github.com/"
+      "https://api.github.com"
     else
-      "https://#{github_host}/api/v3/"
+      "https://#{github_host}/api/v3"
     end
   end
 
