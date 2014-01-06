@@ -6,7 +6,6 @@ describe CommitStatus do
   let(:token) { "ABCDEF123" }
 
   context "with a username and token" do
-
     before do
       ENV["GITHUB_API_USER"], ENV["GITHUB_API_TOKEN"] = user, token
     end
@@ -28,6 +27,22 @@ describe CommitStatus do
 
       CommitStatus.mark build.id, :pending
       # If +resource+ doesn't get sent :post, or gets the wrong arguments, boom! spec failure.
+    end
+
+    it "uses the project's GitHub API endpoint" do
+      build = builds(:two)
+      repo_name = build.project.repo
+      sha = build.sha
+      endpoint = "https://github.internal.com/api/v3/repos/#{repo_name}/statuses/#{sha}"
+
+      expect(RestClient::Resource).to receive(:new).with(endpoint, user, token).and_return(resource)
+
+      commit_json = '{"state":"pending","description":"Build pending.","target_url":"http://localhost:6161/builds/2"}'
+      dict = { content_type: :json, accept: :json }
+
+      expect(resource).to receive(:post).with(commit_json, dict)
+
+      CommitStatus.mark build.id, :pending
     end
   end
 end

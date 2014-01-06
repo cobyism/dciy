@@ -7,3 +7,4 @@ one:
 two:
   id: 2
   repo: something/else
+  github_host: github.internal.com
