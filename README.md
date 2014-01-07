@@ -107,6 +107,17 @@ DCIY will then go off and do the following:
 Keeping an eye on [`/builds`](http://localhost:6161/builds) will show you the status of the build
 as it runs in the background, and you can click on the build to view the output once it’s finished.
 
+### GitHub:Enterprise
+
+To use DCIY with a project on a GitHub:Enterprise instance, add a line to your `.env` file like so:
+
+```bash
+ENTERPRISE_HOST=github.starship-enterprise.com
+```
+
+Now, when you're creating or editing projects, you can choose `github.starship-enterprise.com` as a
+GitHub host.
+
 ## Contributing to DCIY
 
 I’d :heart: to receive contributions and feedback from anyone,
