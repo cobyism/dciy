@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  after_action :set_hosts, only: [:new, :edit]
+  before_action :set_hosts, only: [:new, :edit]
 
   # GET /projects
   # GET /projects.json
@@ -70,11 +70,9 @@ class ProjectsController < ApplicationController
 
     # Derive a set of host choices from the project.
     def set_hosts
-      @hosts = [
-        ENV['ENTERPRISE_HOST'],
-        'github.com',
-        @project.github_host
-      ].reject(&:blank?).uniq
+      choices = [ENV['ENTERPRISE_HOST'], 'github.com']
+      choices << @project.github_host if @project
+      @hosts = choices.reject(&:blank?).uniq
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
