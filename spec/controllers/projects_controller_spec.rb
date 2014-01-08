@@ -42,9 +42,9 @@ describe ProjectsController do
   describe "github host choices" do
     let(:other_host) { projects(:two) }
 
-    context "without an ENTERPRISE_HOST" do
+    context "without ENTERPRISE_HOSTS" do
       before do
-        allow(ENV).to receive(:[]).with('ENTERPRISE_HOST').and_return(nil)
+        allow(ENV).to receive(:[]).with('ENTERPRISE_HOSTS').and_return(nil)
       end
 
       it "shouldn't offer a choice of github host" do
@@ -58,20 +58,26 @@ describe ProjectsController do
       end
     end
 
-    context "with an ENTERPRISE_HOST" do
+    context "with ENTERPRISE_HOSTS" do
       before do
-        allow(ENV).to receive(:[]).with('ENTERPRISE_HOST').and_return('github.starship-enterprise.com')
+        allow(ENV).to receive(:[]).with('ENTERPRISE_HOSTS').and_return(
+          'github.starship-enterprise.com,github.galactica.com')
       end
 
       it "should offer a choice of github hosts" do
         get :new, id: project
-        expect(assigns :hosts).to eq(%w{github.starship-enterprise.com github.com})
+        expect(assigns :hosts).to eq(%w{
+          github.starship-enterprise.com
+          github.galactica.com
+          github.com
+        })
       end
 
       it "offers the original host as a choice on existing projects" do
         get :edit, id: other_host
         expect(assigns :hosts).to eq([
           'github.starship-enterprise.com',
+          'github.galactica.com',
           'github.com',
           other_host.github_host])
       end

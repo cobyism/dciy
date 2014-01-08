@@ -70,7 +70,8 @@ class ProjectsController < ApplicationController
 
     # Derive a set of host choices from the project.
     def set_hosts
-      choices = [ENV['ENTERPRISE_HOST'], 'github.com']
+      choices = (ENV['ENTERPRISE_HOSTS'] || '').split(',')
+      choices << 'github.com'
       choices << @project.github_host if @project
       @hosts = choices.reject(&:blank?).uniq
     end

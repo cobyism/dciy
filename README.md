@@ -112,7 +112,7 @@ as it runs in the background, and you can click on the build to view the output 
 To use DCIY with a project on a GitHub:Enterprise instance, add a line to your `.env` file like so:
 
 ```bash
-ENTERPRISE_HOST=github.starship-enterprise.com
+ENTERPRISE_HOSTS=github.starship-enterprise.com
 ```
 
 Now, when you're creating or editing projects, you can choose `github.starship-enterprise.com` as a
