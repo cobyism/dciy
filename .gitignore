@@ -15,5 +15,8 @@
 /log/*.log
 /tmp
 
+# Ignore precompiled assets.
+/public/assets
+
 /workspace
 .env
