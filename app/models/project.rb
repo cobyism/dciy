@@ -16,7 +16,15 @@ class Project < ActiveRecord::Base
   end
 
   def repo_uri
-    "https://github.com/#{repo}"
+    "https://#{github_host}/#{repo}"
+  end
+
+  def api_uri
+    if github_host == "github.com"
+      "https://api.github.com"
+    else
+      "https://#{github_host}/api/v3"
+    end
   end
 
   def has_file? filename

@@ -13,7 +13,14 @@
 
   <div class="field">
     <%= f.label :repo, "Repository URL" %><br>
-    https://github.com/<%= f.text_field :repo, :placeholder => "owner/repository" %>
+    https://
+    <% if @hosts.size == 1 %>
+      <%= @hosts.first %>
+    <% else %>
+      <%= f.select :github_host, @hosts %>
+    <% end %>
+    /
+    <%= f.text_field :repo, :placeholder => "owner/repository" %>
   </div>
   <div class="actions">
     <%= f.submit %>

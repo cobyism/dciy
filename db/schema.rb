@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130927205508) do
+ActiveRecord::Schema.define(version: 20140106022030) do
 
   create_table "builds", force: true do |t|
     t.integer  "project_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20130927205508) do
     t.string   "repo"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "github_host", default: "github.com"
   end
 
 end
