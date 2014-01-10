@@ -1,3 +1,8 @@
+<% # We should move this sort of logic to a view class %>
+<% return_path = if @project.new_record? then root_path else
+  project_builds_path(@project) end %>
+
+
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -13,10 +18,16 @@
 
   <div class="field">
     <%= f.label :repo, "Repository URL" %><br>
-    https://<%= @hosts.size == 1 ? @hosts.first : f.select(:github_host, @hosts) %>/
+    <% if @hosts.size > 1 %>
+      <span class="description">https://<%= f.select :github_host, @hosts %>/</span>
+    <% else %>
+      <span class="description">https://<%= @hosts.first %>/</span>
+    <% end %>
     <%= f.text_field :repo, :placeholder => "owner/repository" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "button" %>
+     or
+    <%= link_to "Go Back", return_path, class: "button" %>
   </div>
 <% end %>
