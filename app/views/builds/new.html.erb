@@ -1,4 +1,11 @@
-<h1>New build</h1>
+<% build_abort_path = if @build.project_id?
+  then project_builds_path(@build.project) else root_path end %>
+
+<div class="page-header">
+  <div class="page-title">
+    <h1>New Build</h1>
+  </div>
+</div>
 
 <%= form_for(@build) do |f| %>
   <% if @build.errors.any? %>
@@ -24,8 +31,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Punch it, Chewie!", class: "button button-primary" %>
+      or <%= link_to 'Abort and go back', build_abort_path, class: "button" %>
   </div>
 <% end %>
-
-<%= link_to 'Back', builds_path %>

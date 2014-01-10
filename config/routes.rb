@@ -1,9 +1,10 @@
 DCIY::Application.routes.draw do
   resources :builds
 
-  resources :projects do
+  resources :projects, :except => [:index] do
     resources :builds, :except => [:edit, :update]
   end
+
   root to: "builds#index"
 
   require 'sidekiq/web'

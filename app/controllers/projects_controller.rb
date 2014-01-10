@@ -2,12 +2,6 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_hosts, only: [:new, :edit]
 
-  # GET /projects
-  # GET /projects.json
-  def index
-    @projects = Project.all
-  end
-
   # GET /projects/1
   # GET /projects/1.json
   def show
@@ -57,7 +51,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end

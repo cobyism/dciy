@@ -5,6 +5,10 @@ $dciy-red: #911;
 $dciy-orange: #f90;
 $dciy-grey: #888;
 
+// Sizes
+$description-title-width: 4em;
+$form-field-font-size: 12px;
+
 @mixin gradient($start: #f3f3f3, $end: #eee){
   background-color: $end;
   // FF 3.6+

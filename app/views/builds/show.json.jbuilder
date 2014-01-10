@@ -1,1 +1,1 @@
-json.extract! @build, :successful, :output, :status_phrase
+json.extract! @build, :successful, :output, :status_phrase, :sha
