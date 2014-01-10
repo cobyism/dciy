@@ -18,13 +18,15 @@
 
   <div class="field">
     <%= f.label :repo, "Repository URL" %><br>
-    <span class="description">https://
-    <% if @hosts.size == 1 %>
-      <%= @hosts.first %>
-    <% else %>
-      <%= f.select :github_host, @hosts %>
-    <% end %>
-    /</span>
+    <span class="description">
+      https://
+      <% if @hosts.size == 1 %>
+        <%= @hosts.first %>
+      <% else %>
+        <%= f.select :github_host, @hosts %>
+      <% end %>
+      /
+    </span>
     <%= f.text_field :repo, :placeholder => "owner/repository" %>
   </div>
   <div class="actions">

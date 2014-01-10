@@ -25,4 +25,12 @@
     color: #FFFAFA;
     text-shadow: 0 -1px 0 #BE363F;
   }
+
+  &.button-primary {
+    @include gradient(#69C580, #4EAD66);
+    border: 1px solid #419155;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), inset 0 1px 0 #68D583;
+    color: #FFFAFA;
+    text-shadow: 0 -1px 0 #419155;
+  }
 }
