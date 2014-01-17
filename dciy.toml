@@ -1,3 +1,3 @@
 [dciy.commands]
-prepare = ["bundle install"]
+prepare = ["bundle install", "bundle exec rake db:migrate"]
 cibuild = ["bundle exec rake spec"]
