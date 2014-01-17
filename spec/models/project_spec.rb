@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Project do
   let(:project) { Project.create! repo: 'cobyism/dciy.git' }
 
+  it "requires a non-empty repo URI" do
+    p = Project.create repo: ''
+    expect(p).not_to be_valid
+  end
+
   context 'with the default github uri' do
     it 'generates a git URI' do
       expect(project.repo_uri).to eq('https://github.com/cobyism/dciy.git')

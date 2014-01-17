@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
   has_many :builds, :dependent => :destroy
 
+  validates :repo, presence: true
+
   BuildInstructions = Struct.new(:prepare_cmds, :ci_cmds)
 
   def workspace_path

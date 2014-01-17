@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'time'
 
 describe Build do
-  let(:project) { Project.create! }
+  let(:project) { Project.create! repo: 'cobyism/dciy' }
   let(:now) { Time.parse '1 Jan 2013 12:00am GMT' }
 
   before do
