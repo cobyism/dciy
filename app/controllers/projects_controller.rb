@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :set_hosts, only: [:new, :edit]
+  before_action :set_hosts, only: [:new, :edit, :create, :update]
 
   # GET /projects/1
   # GET /projects/1.json
