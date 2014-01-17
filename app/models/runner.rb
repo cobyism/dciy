@@ -21,6 +21,7 @@ class Runner
     do_ascii_header
     add_dciy_build_output "Aight, let's do this!"
     begin
+      ENV['GIT_ASKPASS'] = 'echo'
       do_checkout
       run_prepare && run_ci
     rescue CantFindBuildFile
