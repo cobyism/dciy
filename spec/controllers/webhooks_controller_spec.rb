@@ -11,12 +11,7 @@ describe WebhooksController do
       # Reference:
       # https://help.github.com/articles/post-receive-hooks#the-payload
       expect do
-        post :receive, payload: {
-          ref: 'refs/heads/master',
-          repository: {
-            name: 'cobyism/dciy'
-          }
-        }.to_json
+        post :receive, project_id: project.id, payload: { ref: 'refs/heads/master' }.to_json
       end.to change { project.builds.count }.by(1)
 
       expect(response).to be_success
@@ -26,12 +21,7 @@ describe WebhooksController do
     end
 
     it "returns a 404 on unknown projects" do
-      post :receive, payload: {
-        ref: 'refs/heads/master',
-        repository: {
-          name: 'attacker/exploitz'
-        }
-      }.to_json
+      post :receive, project_id: 12, payload: { ref: 'refs/heads/master' }.to_json
 
       expect(response).to be_not_found
     end
