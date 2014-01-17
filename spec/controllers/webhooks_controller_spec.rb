@@ -21,7 +21,7 @@ describe WebhooksController do
     end
 
     it "returns a 404 on unknown projects" do
-      post :receive, project_id: 12, payload: { ref: 'refs/heads/master' }.to_json
+      post :receive, project_id: 9999999, payload: { ref: 'refs/heads/master' }.to_json
 
       expect(response).to be_not_found
     end
