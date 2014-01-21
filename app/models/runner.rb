@@ -5,6 +5,8 @@ class Runner
 
   class BranchNotFoundError < StandardError; end
 
+  class CheckoutFailedError < StandardError; end
+
   def self.go_nuts_on(build)
     new(build).run_run_run
   end
@@ -50,16 +52,28 @@ EOF
   end
 
   def do_checkout
-
     @logger.info "Started building #{@project.repo} at #{Time.now}"
     @build.update(:started_at => Time.now)
 
+    # Keep git from prompting for passwords!
+    ENV['GIT_ASKPASS'] = 'echo'
+
     if File.exists?(@directory)
       add_dciy_build_output "Updating repository..."
-      in_terminal.run "git fetch origin", @directory
+      fetch_command = "git fetch origin"
+      r = in_terminal.run fetch_command, @directory
     else
       add_dciy_build_output "Cloning repository..."
-      in_terminal.run "git clone #{@project.repo_uri} #{@directory}"
+      fetch_command = "git clone #{@project.repo_uri} #{@directory}"
+      r = in_terminal.run fetch_command
+    end
+
+    unless r.success
+      add_dciy_build_output "Oh, snap! I couldn't fetch the project."
+      add_output "The command I tried was:\n\n" +
+        "#{fetch_command}\n\n... and the output I got was:\n\n" +
+        "#{r.output}\n\n"
+      raise CheckoutFailedError, "Unable to fetch the project."
     end
 
     add_dciy_build_output "Looking up SHA for branch '#{@build.branch}'"
