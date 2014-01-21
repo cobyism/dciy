@@ -8,7 +8,7 @@ describe Project do
     expect(p).not_to be_valid
   end
 
-  it "must have the format username/repo" do
+  it "must have the format owner/repo" do
     %w{tooshort too/many/parts}.each do |bad|
       Project.create(repo: bad).should_not be_valid, "incorrectly accepted #{bad}"
     end
