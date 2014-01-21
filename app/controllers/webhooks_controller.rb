@@ -4,7 +4,7 @@ class WebhooksController < ApplicationController
 
   # POST /webhooks/receive
   def receive
-    push = JSON.parse(params[:payload])
+    payload = JSON.parse(params[:payload])
     p = Project.where(id: params[:project_id]).take
 
     unless p
@@ -13,7 +13,7 @@ class WebhooksController < ApplicationController
       return
     end
 
-    bname = push['ref']
+    bname = payload['ref']
     bname.gsub!(%r{^refs/heads/}, '') if bname
     b = p.builds.create! branch: bname
 
