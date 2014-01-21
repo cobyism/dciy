@@ -1,7 +1,10 @@
 class Project < ActiveRecord::Base
   has_many :builds, :dependent => :destroy
 
-  validates :repo, presence: true
+  validates :repo, presence: true, format: {
+    with: %r{\A[^/]+/[^/]+\z},
+    message: "Must have the form 'owner/repository'"
+  }
 
   BuildInstructions = Struct.new(:prepare_cmds, :ci_cmds)
 

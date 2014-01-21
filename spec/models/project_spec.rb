@@ -8,6 +8,16 @@ describe Project do
     expect(p).not_to be_valid
   end
 
+  it "must have the format username/repo" do
+    %w{tooshort too/many/parts}.each do |bad|
+      Project.create(repo: bad).should_not be_valid, "incorrectly accepted #{bad}"
+    end
+  end
+
+  it "accepts a correctly formatted repo" do
+    project.should be_valid
+  end
+
   context 'with the default github uri' do
     it 'generates a git URI' do
       expect(project.repo_uri).to eq('https://github.com/cobyism/dciy.git')
