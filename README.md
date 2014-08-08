@@ -29,6 +29,12 @@ you should check out some of the following projects:
 - [Kochiku](https://github.com/square/kochiku) (by [Square](https://squareup.com/)) - An open source distributed testing platform.
 - [Jenkins CI](http://jenkins-ci.org/) - Might be ugly, but it’s open source, widely used, and has a large following.
 
+### Deploying on Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cobyism/dciy/tree/herokify)
+
+**Warning:** Deploying DCIY to Heroky is *highly experimental*, and shit may break in weird and spectacular ways.
+
 ### A note about security
 
 DCIY runs all commands on your behalf, so it’s probably not a good idea to

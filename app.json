@@ -1,0 +1,25 @@
+{
+  "name": "DCIY",
+  "description": "Do Continuous Integration Yourself — a simple, open source CI server.",
+  "keywords": [
+    "continuous integration",
+    "testing",
+    "open source",
+    "dciy",
+    "diy"
+  ],
+  "website": "https://github.com/cobyism/dciy",
+  "repository": "https://github.com/cobyism/dciy",
+  "env": {
+    "RAILS_SECRET_TOKEN": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "GITHUB_API_USER": {
+      "description": "GitHub username for accessing the Commit Status API."
+    },
+    "GITHUB_API_TOKEN": {
+      "description": "GitHub personal access token for accessing the Commit Status API."
+    }
+  }
+}
