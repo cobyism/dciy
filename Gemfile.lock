@@ -66,8 +66,8 @@ GEM
     parslet (1.5.0)
       blankslate (~> 2.0)
     polyglot (0.3.3)
-    rack (1.5.2)
-    rack-protection (1.5.1)
+    rack (1.5.5)
+    rack-protection (1.5.5)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
