@@ -23,8 +23,6 @@ gem 'puma'
 
 group :development do
   gem 'rubocop', require: false
-  gem 'pry'
-  gem 'pry-nav'
   gem 'brakeman'
   gem "capistrano", "~> 3.17", require: false
 end
@@ -34,4 +32,9 @@ group :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'rails-controller-testing', '=1.0.5'
+end
+
+group :development, :test do 
+  gem "pry"
+  gem "pry-nav"
 end

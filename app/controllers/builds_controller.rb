@@ -1,4 +1,9 @@
 class BuildsController < ApplicationController
+
+  BUILD_PARAMS = [
+    :project_id, :started_at, :completed_at, :successful, :output, :branch
+  ].freeze
+
   before_action :set_build, only: [:show, :edit, :update, :destroy]
 
   # GET /builds
@@ -59,6 +64,6 @@ class BuildsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def build_params
-      params.require(:build).permit(:project_id, :started_at, :completed_at, :successful, :output, :branch)
+      params.require(:build).permit(*BUILD_PARAMS)
     end
 end

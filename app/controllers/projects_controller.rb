@@ -1,4 +1,8 @@
 class ProjectsController < ApplicationController
+  PROJECT_PARAMS = [
+    :repo, :github_host
+  ].freeze
+
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_hosts, only: [:new, :edit]
 
@@ -72,6 +76,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:repo, :github_host)
+      params.require(:project).permit(*PROJECT_PARAMS)
     end
 end
