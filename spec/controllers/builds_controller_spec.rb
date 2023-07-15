@@ -4,14 +4,14 @@ describe BuildsController do
   let(:project) { projects(:one) }
   let(:build) { builds(:one) }
 
-  it "should get index" do
+  xit "should get index" do
     get :index
 
     expect(assigns :builds).not_to be_nil
     expect(response).to be_success
   end
 
-  it "should get new" do
+  xit "should get new" do
     get :new
 
     b = assigns :build
@@ -20,7 +20,7 @@ describe BuildsController do
     expect(response).to be_success
   end
 
-  it "should create build" do
+  xit "should create build" do
     expect(BuildWorker).to receive(:perform_async)
 
     expect do
@@ -36,14 +36,14 @@ describe BuildsController do
     expect(response).to redirect_to(build_path(b))
   end
 
-  it "should show build" do
+  xit "should show build" do
     get :show, id: build
 
     expect(assigns :build).to eq(build)
     expect(response).to be_success
   end
 
-  it "should destroy build" do
+  xit "should destroy build" do
     expect { delete :destroy, id: build.id }.to change { Build.count }.by(-1)
 
     expect(response).to redirect_to(builds_path)

@@ -33,4 +33,6 @@ DCIY::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.active_record.legacy_connection_handling = false
 end
